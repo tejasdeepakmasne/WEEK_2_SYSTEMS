@@ -803,6 +803,34 @@ void LD_sp_iy() {
     registers.sp = registers.iy;
 }
 
+// 8-bit Arithmetic group
+
+// ADD a,r contents of register R are added to the accumulator
+void ADD_a_a() {
+    registers.a = registers.a + registers.a;
+    if(registers.a < 0) {
+        registers.f |= (1 << 7); //set bit 7 to 1 sign flag
+    }
+    else {
+        registers.f &= ~(1 << 7); //set bit 7 to 0 sign flag
+    }
+
+    if (registers.a == 0) {
+        registers.f |= (1 << 6); //set bit 6 zero flag
+    }
+    else {
+        registers.f &= ~(1 << 6); // reset zero flag
+    }
+
+    if (registers.a > 127) {
+        registers.f |= (1 << 2); // set overflow flag
+    }
+    else {
+        registers.f &= ~(1 << 2); //reset overflow flag
+    }
+    registers.f &= ~(1 << 1); //reset add/struct
+}
+
 // All functions using (IX+d) go here
 void functions_using_IXplusD() {
     uint8_t current_opcode = fetchInstruction();
