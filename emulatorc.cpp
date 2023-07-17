@@ -63,6 +63,61 @@ void loadProgram(const char* filename, uint16_t startAddress) {
     fclose(file);
 }
 
+/*
+z80 allows for usage of bits of register f for usage in certain flags
+bit 0: Carry Flag - C
+bit 1: Add/Subtract - N
+bit 2: Parity/Overflow Flag - P/V
+bit 3: not used
+bit 4: Half Carry Flag - H
+bit 5: not used 
+bit 6: Zero Flag - Z
+bit 7: Sign Flag - S
+
+*/
+
+void set_carry_flag(int i) {
+    switch(i) {
+        case 1: registers.f |= 0b1;break;
+        case 0: registers.f &= ~0b1;break;
+    }
+}
+
+void set_add_sub_flag(int i) {
+    switch(i) {
+        case 1: registers.f |= (1 << 1);break;
+        case 0: registers.f &= ~(1 << 1);break;
+    }
+}
+
+void set_parity_overflow_flag(int i) {
+    switch(i) {
+        case 1: registers.f |= (1<<2);break;
+        case 0: registers.f &= ~(1<<2);break;
+    }
+}
+
+void set_half_carry_flag(int i) {
+    switch(i) {
+        case 1: registers.f |= (1<<4);break;
+        case 0: registers.f &= ~(1<<4);break;
+    }
+}
+
+void set_zero_flag(int i) {
+    switch(i) {
+        case 1: registers.f |= (1<<6);break;
+        case 0: registers.f &= ~(1<<6);break;
+    }
+}
+
+void set_sign_flag(int i) {
+    switch(i) {
+        case 1: registers.f |= (1<<7);break;
+        case 0: registers.f &= ~(1<<7);break;
+    }
+}
+
 // 8-bit load group instructions
 
 // LD r,r' contents of register r' are loaded in r
@@ -807,28 +862,20 @@ void LD_sp_iy() {
 
 // ADD a,r contents of register R are added to the accumulator
 void ADD_a_a() {
-    registers.a = registers.a + registers.a;
-    if(registers.a < 0) {
-        registers.f |= (1 << 7); //set bit 7 to 1 sign flag
+    //checking for half carry
+    int H = (registers.a % 16) + (registers.a % 16);
+    if(H > 15) {
+        set_half_carry_flag(1);
     }
     else {
-        registers.f &= ~(1 << 7); //set bit 7 to 0 sign flag
+        set_half_carry_flag(0);
     }
 
-    if (registers.a == 0) {
-        registers.f |= (1 << 6); //set bit 6 zero flag
-    }
-    else {
-        registers.f &= ~(1 << 6); // reset zero flag
-    }
+    // doing the addition
+    registers.a = (registers.a + registers.a) % 256;
 
-    if (registers.a > 127) {
-        registers.f |= (1 << 2); // set overflow flag
-    }
-    else {
-        registers.f &= ~(1 << 2); //reset overflow flag
-    }
-    registers.f &= ~(1 << 1); //reset add/struct
+    //checking for sign bit
+    int S = twos_comp_displ_int(registers.a);
 }
 
 // All functions using (IX+d) go here
