@@ -75,6 +75,12 @@ bit 6: Zero Flag - Z
 bit 7: Sign Flag - S
 
 */
+// Function to extract k bits from p position
+// and returns the extracted value as integer
+int bitExtracted(int number, int k, int p)
+{
+    return (((1 << k) - 1) & (number >> (p - 1)));
+}
 
 void set_carry_flag(int i) {
     switch(i) {
@@ -118,6 +124,22 @@ void set_sign_flag(int i) {
     }
 }
 
+uint16_t address_of_HL() {
+    uint16_t address = (registers.h << 8) | registers.l;
+    return address; 
+}
+
+uint16_t address_of_IXplusD() {
+    uint8_t d = readMemory(registers.pc);
+    uint16_t address = registers.ix + twos_comp_displ_int(d);
+    return address;
+}
+
+uint16_t address_of_IYplusD() {
+    uint8_t d = readMemory(registers.pc);
+    uint16_t address = registers.iy + twos_comp_displ_int(d);
+    return address;
+}
 // 8-bit load group instructions
 
 // LD r,r' contents of register r' are loaded in r
@@ -862,8 +884,34 @@ void LD_sp_iy() {
 
 // ADD a,r contents of register R are added to the accumulator
 void ADD_a_a() {
+    int A = registers.a;
+    int R = registers.a;
+    
+    // doing the addition
+    registers.a = (registers.a + registers.a) % 256;
+
+    //checking for carry
+    if (registers.a > 255) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    // checking for add/subtract
+    set_add_sub_flag(0);
+
+    // checking for parity/overflow
+    int P_V = twos_comp_displ_int(A) + twos_comp_displ_int(R);
+    if((P_V < -128) || (P_V > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
     //checking for half carry
-    int H = (registers.a % 16) + (registers.a % 16);
+    int H = (A % 16) + (R % 16);
     if(H > 15) {
         set_half_carry_flag(1);
     }
@@ -871,11 +919,1271 @@ void ADD_a_a() {
         set_half_carry_flag(0);
     }
 
-    // doing the addition
-    registers.a = (registers.a + registers.a) % 256;
+    // checking for zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
 
     //checking for sign bit
     int S = twos_comp_displ_int(registers.a);
+    if(S > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+}
+
+void ADD_a_b() {
+    int A = registers.a;
+    int R = registers.b;
+    
+    // doing the addition
+    registers.a = (registers.a + registers.b) % 256;
+
+    //checking for carry
+    if (registers.a > 255) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    // checking for add/subtract
+    set_add_sub_flag(0);
+
+    // checking for parity/overflow
+    int P_V = twos_comp_displ_int(A) + twos_comp_displ_int(R);
+    if((P_V < -128) || (P_V > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking for half carry
+    int H = (A % 16) + (R % 16);
+    if(H > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    // checking for zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking for sign bit
+    int S = twos_comp_displ_int(registers.a);
+    if(S > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+}
+
+void ADD_a_c() {
+    int A = registers.a;
+    int R = registers.c;
+    
+    // doing the addition
+    registers.a = (registers.a + registers.c) % 256;
+
+    //checking for carry
+    if (registers.a > 255) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    // checking for add/subtract
+    set_add_sub_flag(0);
+
+    // checking for parity/overflow
+    int P_V = twos_comp_displ_int(A) + twos_comp_displ_int(R);
+    if((P_V < -128) || (P_V > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking for half carry
+    int H = (A % 16) + (R % 16);
+    if(H > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    // checking for zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking for sign bit
+    int S = twos_comp_displ_int(registers.a);
+    if(S > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+}
+
+void ADD_a_d() {
+    int A = registers.a;
+    int R = registers.d;
+    
+    // doing the addition
+    registers.a = (registers.a + registers.d) % 256;
+
+    //checking for carry
+    if (registers.a > 255) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    // checking for add/subtract
+    set_add_sub_flag(0);
+
+    // checking for parity/overflow
+    int P_V = twos_comp_displ_int(A) + twos_comp_displ_int(R);
+    if((P_V < -128) || (P_V > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking for half carry
+    int H = (A % 16) + (R % 16);
+    if(H > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    // checking for zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking for sign bit
+    int S = twos_comp_displ_int(registers.a);
+    if(S > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+}
+
+void ADD_a_e() {
+    int A = registers.a;
+    int R = registers.e;
+    
+    // doing the addition
+    registers.a = (registers.a + registers.e) % 256;
+
+    //checking for carry
+    if (registers.a > 255) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    // checking for add/subtract
+    set_add_sub_flag(0);
+
+    // checking for parity/overflow
+    int P_V = twos_comp_displ_int(A) + twos_comp_displ_int(R);
+    if((P_V < -128) || (P_V > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking for half carry
+    int H = (A % 16) + (R % 16);
+    if(H > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    // checking for zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking for sign bit
+    int S = twos_comp_displ_int(registers.a);
+    if(S > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+}
+
+void ADD_a_f() {
+    int A = registers.a;
+    int R = registers.f;
+    
+    // doing the addition
+    registers.a = (registers.a + registers.f) % 256;
+
+    //checking for carry
+    if (registers.a > 255) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    // checking for add/subtract
+    set_add_sub_flag(0);
+
+    // checking for parity/overflow
+    int P_V = twos_comp_displ_int(A) + twos_comp_displ_int(R);
+    if((P_V < -128) || (P_V > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking for half carry
+    int H = (A % 16) + (R % 16);
+    if(H > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    // checking for zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking for sign bit
+    int S = twos_comp_displ_int(registers.a);
+    if(S > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+}
+
+void ADD_a_l() {
+    int A = registers.a;
+    int R = registers.l;
+    
+    // doing the addition
+    registers.a = (registers.a + registers.l) % 256;
+
+    //checking for carry
+    if (registers.a > 255) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    // checking for add/subtract
+    set_add_sub_flag(0);
+
+    // checking for parity/overflow
+    int P_V = twos_comp_displ_int(A) + twos_comp_displ_int(R);
+    if((P_V < -128) || (P_V > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking for half carry
+    int H = (A % 16) + (R % 16);
+    if(H > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    // checking for zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking for sign bit
+    int S = twos_comp_displ_int(registers.a);
+    if(S > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+}
+
+// ADD A,n where A is accumulator and n is 8 bit integer and store result in A
+void ADD_a_8bit_n() {
+    int A = registers.a;
+    int R = readMemory(registers.pc);
+    
+    // doing the addition
+    registers.a = (registers.a + readMemory(registers.pc)) % 256;
+
+    //checking for carry
+    if (registers.a > 255) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    // checking for add/subtract
+    set_add_sub_flag(0);
+
+    // checking for parity/overflow
+    int P_V = twos_comp_displ_int(A) + twos_comp_displ_int(R);
+    if((P_V < -128) || (P_V > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking for half carry
+    int H = (A % 16) + (R % 16);
+    if(H > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    // checking for zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking for sign bit
+    int S = twos_comp_displ_int(registers.a);
+    if(S > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    ++registers.pc;
+
+}
+
+// ADD A,(HL) Add value in A and memory location (HL) and store in A
+void ADD_a_memoryOf_HL() {
+    int A = registers.a;
+    int R = readMemory(address_of_HL());
+    
+    // doing the addition
+    registers.a = (registers.a + readMemory(address_of_HL())) % 256;
+
+    //checking for carry
+    if (registers.a > 255) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    // checking for add/subtract
+    set_add_sub_flag(0);
+
+    // checking for parity/overflow
+    int P_V = twos_comp_displ_int(A) + twos_comp_displ_int(R);
+    if((P_V < -128) || (P_V > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking for half carry
+    int H = (A % 16) + (R % 16);
+    if(H > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    // checking for zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking for sign bit
+    int S = twos_comp_displ_int(registers.a);
+    if(S > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+}
+
+// ADD A,(IX+d) add A and 8bit int at memory location (IX+d) and store in A
+/*
+here (IX+d) means the address specified by register pair IX and 2s complement 
+displaced d
+*/
+
+void ADD_a_memoryOf_IXplusD() {
+    int A = registers.a;
+    int R = readMemory(address_of_IXplusD());
+    
+    // doing the addition
+    registers.a = (registers.a + readMemory(address_of_IXplusD())) % 256;
+
+    //checking for carry
+    if (registers.a > 255) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    // checking for add/subtract
+    set_add_sub_flag(0);
+
+    // checking for parity/overflow
+    int P_V = twos_comp_displ_int(A) + twos_comp_displ_int(R);
+    if((P_V < -128) || (P_V > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking for half carry
+    int H = (A % 16) + (R % 16);
+    if(H > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    // checking for zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking for sign bit
+    int S = twos_comp_displ_int(registers.a);
+    if(S > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    ++registers.pc;
+}
+
+// ADD A,(IY+d) add A and 8bit int at memory location (IY+d) and store in A
+/*
+here (IY+d) means the address specified by register pair IY and 2s complement 
+displaced d
+*/
+
+void ADD_a_memoryOf_IYplusD() {
+    int A = registers.a;
+    int R = readMemory(address_of_IYplusD());
+    
+    // doing the addition
+    registers.a = (registers.a + readMemory(address_of_IYplusD())) % 256;
+
+    //checking for carry
+    if (registers.a > 255) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    // checking for add/subtract
+    set_add_sub_flag(0);
+
+    // checking for parity/overflow
+    int P_V = twos_comp_displ_int(A) + twos_comp_displ_int(R);
+    if((P_V < -128) || (P_V > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking for half carry
+    int H = (A % 16) + (R % 16);
+    if(H > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    // checking for zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking for sign bit
+    int S = twos_comp_displ_int(registers.a);
+    if(S > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    ++registers.pc;
+}
+
+/*
+ADC A,r - add value in accumulator, the register r and the value of carry flag 
+and store it in accumulator
+*/
+void ADC_a_a() {
+    int A = registers.a;
+    int R = registers.a;
+
+    //doing addition
+    int carry_value = bitExtracted(registers.f,1,0);
+    registers.a = (registers.a + registers.a + carry_value)%256;
+
+    //checking for carry
+    if (registers.a > 255) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    // checking for add/subtract
+    set_add_sub_flag(0);
+
+    // checking for parity/overflow
+    int P_V = twos_comp_displ_int(A) + twos_comp_displ_int(R);
+    if((P_V < -128) || (P_V > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking for half carry
+    int H = (A % 16) + (R % 16);
+    if(H > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    // checking for zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking for sign bit
+    int S = twos_comp_displ_int(registers.a);
+    if(S > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+}
+
+void ADC_a_b() {
+    int A = registers.a;
+    int R = registers.b;
+
+    //doing addition
+    int carry_value = bitExtracted(registers.f,1,0);
+    registers.a = (registers.a + registers.b + carry_value)%256;
+
+    //checking for carry
+    if (registers.a > 255) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    // checking for add/subtract
+    set_add_sub_flag(0);
+
+    // checking for parity/overflow
+    int P_V = twos_comp_displ_int(A) + twos_comp_displ_int(R);
+    if((P_V < -128) || (P_V > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking for half carry
+    int H = (A % 16) + (R % 16);
+    if(H > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    // checking for zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking for sign bit
+    int S = twos_comp_displ_int(registers.a);
+    if(S > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+}
+
+void ADC_a_c() {
+    int A = registers.a;
+    int R = registers.c;
+
+    //doing addition
+    int carry_value = bitExtracted(registers.f,1,0);
+    registers.a = (registers.a + registers.c + carry_value)%256;
+
+    //checking for carry
+    if (registers.a > 255) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    // checking for add/subtract
+    set_add_sub_flag(0);
+
+    // checking for parity/overflow
+    int P_V = twos_comp_displ_int(A) + twos_comp_displ_int(R);
+    if((P_V < -128) || (P_V > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking for half carry
+    int H = (A % 16) + (R % 16);
+    if(H > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    // checking for zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking for sign bit
+    int S = twos_comp_displ_int(registers.a);
+    if(S > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+}
+
+void ADC_a_d() {
+    int A = registers.a;
+    int R = registers.d;
+
+    //doing addition
+    int carry_value = bitExtracted(registers.f,1,0);
+    registers.a = (registers.a + registers.d + carry_value)%256;
+
+    //checking for carry
+    if (registers.a > 255) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    // checking for add/subtract
+    set_add_sub_flag(0);
+
+    // checking for parity/overflow
+    int P_V = twos_comp_displ_int(A) + twos_comp_displ_int(R);
+    if((P_V < -128) || (P_V > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking for half carry
+    int H = (A % 16) + (R % 16);
+    if(H > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    // checking for zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking for sign bit
+    int S = twos_comp_displ_int(registers.a);
+    if(S > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+}
+
+void ADC_a_e() {
+    int A = registers.a;
+    int R = registers.e;
+
+    //doing addition
+    int carry_value = bitExtracted(registers.f,1,0);
+    registers.a = (registers.a + registers.e + carry_value)%256;
+
+    //checking for carry
+    if (registers.a > 255) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    // checking for add/subtract
+    set_add_sub_flag(0);
+
+    // checking for parity/overflow
+    int P_V = twos_comp_displ_int(A) + twos_comp_displ_int(R);
+    if((P_V < -128) || (P_V > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking for half carry
+    int H = (A % 16) + (R % 16);
+    if(H > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    // checking for zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking for sign bit
+    int S = twos_comp_displ_int(registers.a);
+    if(S > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+}
+
+void ADC_a_f() {
+    int A = registers.a;
+    int R = registers.f;
+
+    //doing addition
+    int carry_value = bitExtracted(registers.f,1,0);
+    registers.a = (registers.a + registers.f + carry_value)%256;
+
+    //checking for carry
+    if (registers.a > 255) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    // checking for add/subtract
+    set_add_sub_flag(0);
+
+    // checking for parity/overflow
+    int P_V = twos_comp_displ_int(A) + twos_comp_displ_int(R);
+    if((P_V < -128) || (P_V > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking for half carry
+    int H = (A % 16) + (R % 16);
+    if(H > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    // checking for zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking for sign bit
+    int S = twos_comp_displ_int(registers.a);
+    if(S > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+}
+
+void ADC_a_l() {
+    int A = registers.a;
+    int R = registers.l;
+
+    //doing addition
+    int carry_value = bitExtracted(registers.f,1,0);
+    registers.a = (registers.a + registers.l + carry_value)%256;
+
+    //checking for carry
+    if (registers.a > 255) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    // checking for add/subtract
+    set_add_sub_flag(0);
+
+    // checking for parity/overflow
+    int P_V = twos_comp_displ_int(A) + twos_comp_displ_int(R);
+    if((P_V < -128) || (P_V > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking for half carry
+    int H = (A % 16) + (R % 16);
+    if(H > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    // checking for zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking for sign bit
+    int S = twos_comp_displ_int(registers.a);
+    if(S > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+}
+
+// ADC A,n add value at accumulator and 8bit n and store in accumulator
+void ADC_a_8bit_n() {
+    int A = registers.a;
+    int R = readMemory(registers.pc);
+    
+    // doing the addition
+    int carry_value = bitExtracted(registers.f,1,0);
+    registers.a = (registers.a + readMemory(registers.pc)+carry_value) % 256;
+
+    //checking for carry
+    if (registers.a > 255) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    // checking for add/subtract
+    set_add_sub_flag(0);
+
+    // checking for parity/overflow
+    int P_V = twos_comp_displ_int(A) + twos_comp_displ_int(R);
+    if((P_V < -128) || (P_V > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking for half carry
+    int H = (A % 16) + (R % 16);
+    if(H > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    // checking for zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking for sign bit
+    int S = twos_comp_displ_int(registers.a);
+    if(S > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    ++registers.pc;
+
+}
+
+//ADC A,(HL) add accumulator, memory location HL and carry flag in accumulator 
+void ADC_a_memoryOf_hl() {
+    int A = registers.a;
+    int R = readMemory(address_of_HL());
+    
+    // doing the addition
+    int carry_value = bitExtracted(registers.f,1,0);
+    registers.a = (registers.a + readMemory(address_of_HL())+carry_value) % 256;
+
+    //checking for carry
+    if (registers.a > 255) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    // checking for add/subtract
+    set_add_sub_flag(0);
+
+    // checking for parity/overflow
+    int P_V = twos_comp_displ_int(A) + twos_comp_displ_int(R);
+    if((P_V < -128) || (P_V > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking for half carry
+    int H = (A % 16) + (R % 16);
+    if(H > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    // checking for zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking for sign bit
+    int S = twos_comp_displ_int(registers.a);
+    if(S > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+}
+
+//ADC A,(IX+d) add into accumlator-accumulator,memory location (IX+d),carry flag
+void ADC_a_memoryOf_IXplusD() {
+     int A = registers.a;
+    int R = readMemory(address_of_IXplusD());
+    
+    // doing the addition
+    int carry_value = bitExtracted(registers.f,1,0);
+    registers.a = (registers.a + readMemory(address_of_IXplusD())+carry_value) % 256;
+
+    //checking for carry
+    if (registers.a > 255) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    // checking for add/subtract
+    set_add_sub_flag(0);
+
+    // checking for parity/overflow
+    int P_V = twos_comp_displ_int(A) + twos_comp_displ_int(R);
+    if((P_V < -128) || (P_V > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking for half carry
+    int H = (A % 16) + (R % 16);
+    if(H > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    // checking for zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking for sign bit
+    int S = twos_comp_displ_int(registers.a);
+    if(S > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    ++registers.pc;
+}
+
+//ADC A,(IY+d) add into accumlator-accumulator,memory location (IY+d),carry flag
+void ADC_a_memoryOf_IYplusD() {
+     int A = registers.a;
+    int R = readMemory(address_of_IYplusD());
+    
+    // doing the addition
+    int carry_value = bitExtracted(registers.f,1,0);
+    registers.a = (registers.a + readMemory(address_of_IYplusD())+carry_value) % 256;
+
+    //checking for carry
+    if (registers.a > 255) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    // checking for add/subtract
+    set_add_sub_flag(0);
+
+    // checking for parity/overflow
+    int P_V = twos_comp_displ_int(A) + twos_comp_displ_int(R);
+    if((P_V < -128) || (P_V > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking for half carry
+    int H = (A % 16) + (R % 16);
+    if(H > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    // checking for zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking for sign bit
+    int S = twos_comp_displ_int(registers.a);
+    if(S > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    ++registers.pc;
+}
+
+/*
+SUB r the value in register r is subtracted from accumulator and result stored 
+in accumulator
+*/
+void SUB_a() {
+    int A = registers.a;
+    int R = registers.a;
+
+    //doing the subtraction
+    registers.a = (registers.a - registers.a) % 256;
+
+    //checking carry - if difference < 0
+    if(A - R < 0) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    //checking add/subtract flag 
+    set_add_sub_flag(1);
+
+    //checking parity/overflow - if signed difference < -128 or > 127
+    int signed_difference = twos_comp_displ_int(A) - twos_comp_displ_int(R);
+    if((signed_difference < -128) || (signed_difference > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking half carry flag : if A%16 - R%16 < 0
+    int half_carry_check = (A%16) - (R%16);
+    if(half_carry_check < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //checking zero flag : if result is 0
+    if(registers.a < 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking sign flag: if result > 127
+    
 }
 
 // All functions using (IX+d) go here
@@ -916,6 +2224,12 @@ void functions_using_IXplusD() {
 
         //LD sp,ix
         case 0xF9: LD_sp_ix();break;
+
+        //ADD a, (IX+d)
+        case 0x86: ADD_a_memoryOf_IXplusD();break;
+
+        //ADC a, (IX+d)
+        case 0x8E: ADC_a_memoryOf_IXplusD();break;
         
     }
 }
@@ -958,6 +2272,12 @@ void functions_using_IYplusD() {
 
         //LD sp,iy
         case 0xF9: LD_sp_iy();break;
+
+        //ADD a, (IY+d)
+        case 0x86: ADD_a_memoryOf_IYplusD();break;
+
+        //ADC a, (IX+d)
+        case 0x8E: ADC_a_memoryOf_IYplusD();break;
     }
 }
 
@@ -1126,6 +2446,62 @@ void decodeInstruction(uint8_t opcode) {
 
         //LD SP,HL
         case 0xF9: LD_sp_hl();break;
+
+        //8bit arithmetic and logic
+
+        //ADD A,A
+        case 0x87: ADD_a_a();break;
+
+        //ADD A,B
+        case 0x80: ADD_a_b();break;
+
+        //ADD A,C
+        case 0x81: ADD_a_c();break;
+
+        //ADD A,D
+        case 0x82: ADD_a_d();break;
+
+        //ADD A,E
+        case 0x83: ADD_a_e();break;
+
+        //ADD A,F
+        case 0x84: ADD_a_f();break;
+
+        //ADD A,L
+        case 0x85: ADD_a_l();break;
+
+        //ADD A,n
+        case 0xC6: ADD_a_8bit_n();break;
+
+        //ADD A,(HL)
+        case 0x86: ADD_a_memoryOf_HL();break;
+
+        //ADC A,A
+        case 0x8F: ADC_a_a();break;
+
+        //ADC A,B
+        case 0x88: ADC_a_b();break;
+
+        // ADC A,C
+        case 0x89: ADC_a_c();break;
+
+        // ADC A,D
+        case 0x8A: ADC_a_d();break;
+
+        //ADC A,E
+        case 0x8B: ADC_a_e();break;
+
+        //ADC A,F
+        case 0x8C: ADC_a_f();break;
+
+        //ADC A,L
+        case 0x8D: ADC_a_l();break;
+
+        //ADC A,n
+        case 0xCE: ADC_a_8bit_n();break;
+
+        //ADC A,(HL)
+        case 0x8E: ADC_a_memoryOf_hl();break;
     }
 }
 
