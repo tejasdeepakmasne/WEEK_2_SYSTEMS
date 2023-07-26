@@ -928,8 +928,7 @@ void ADD_a_a() {
     }
 
     //checking for sign bit
-    int S = twos_comp_displ_int(registers.a);
-    if(S > 127) {
+    if(registers.a > 127) {
         set_sign_flag(1);
     }
     else {
@@ -983,8 +982,7 @@ void ADD_a_b() {
     }
 
     //checking for sign bit
-    int S = twos_comp_displ_int(registers.a);
-    if(S > 127) {
+    if(registers.a > 127) {
         set_sign_flag(1);
     }
     else {
@@ -1038,8 +1036,7 @@ void ADD_a_c() {
     }
 
     //checking for sign bit
-    int S = twos_comp_displ_int(registers.a);
-    if(S > 127) {
+    if(registers.a > 127) {
         set_sign_flag(1);
     }
     else {
@@ -1093,8 +1090,7 @@ void ADD_a_d() {
     }
 
     //checking for sign bit
-    int S = twos_comp_displ_int(registers.a);
-    if(S > 127) {
+    if(registers.a > 127) {
         set_sign_flag(1);
     }
     else {
@@ -1148,8 +1144,7 @@ void ADD_a_e() {
     }
 
     //checking for sign bit
-    int S = twos_comp_displ_int(registers.a);
-    if(S > 127) {
+    if(registers.a > 127) {
         set_sign_flag(1);
     }
     else {
@@ -1203,8 +1198,7 @@ void ADD_a_f() {
     }
 
     //checking for sign bit
-    int S = twos_comp_displ_int(registers.a);
-    if(S > 127) {
+    if(registers.a > 127) {
         set_sign_flag(1);
     }
     else {
@@ -1258,8 +1252,7 @@ void ADD_a_l() {
     }
 
     //checking for sign bit
-    int S = twos_comp_displ_int(registers.a);
-    if(S > 127) {
+    if(registers.a > 127) {
         set_sign_flag(1);
     }
     else {
@@ -1314,8 +1307,7 @@ void ADD_a_8bit_n() {
     }
 
     //checking for sign bit
-    int S = twos_comp_displ_int(registers.a);
-    if(S > 127) {
+    if(registers.a > 127) {
         set_sign_flag(1);
     }
     else {
@@ -1372,8 +1364,7 @@ void ADD_a_memoryOf_HL() {
     }
 
     //checking for sign bit
-    int S = twos_comp_displ_int(registers.a);
-    if(S > 127) {
+    if(registers.a > 127) {
         set_sign_flag(1);
     }
     else {
@@ -1433,8 +1424,7 @@ void ADD_a_memoryOf_IXplusD() {
     }
 
     //checking for sign bit
-    int S = twos_comp_displ_int(registers.a);
-    if(S > 127) {
+    if(registers.a > 127) {
         set_sign_flag(1);
     }
     else {
@@ -1495,8 +1485,7 @@ void ADD_a_memoryOf_IYplusD() {
     }
 
     //checking for sign bit
-    int S = twos_comp_displ_int(registers.a);
-    if(S > 127) {
+    if(registers.a > 127) {
         set_sign_flag(1);
     }
     else {
@@ -1556,8 +1545,7 @@ void ADC_a_a() {
     }
 
     //checking for sign bit
-    int S = twos_comp_displ_int(registers.a);
-    if(S > 127) {
+    if(registers.a > 127) {
         set_sign_flag(1);
     }
     else {
@@ -1612,8 +1600,7 @@ void ADC_a_b() {
     }
 
     //checking for sign bit
-    int S = twos_comp_displ_int(registers.a);
-    if(S > 127) {
+    if(registers.a > 127) {
         set_sign_flag(1);
     }
     else {
@@ -1668,8 +1655,7 @@ void ADC_a_c() {
     }
 
     //checking for sign bit
-    int S = twos_comp_displ_int(registers.a);
-    if(S > 127) {
+    if(registers.a > 127) {
         set_sign_flag(1);
     }
     else {
@@ -1724,8 +1710,7 @@ void ADC_a_d() {
     }
 
     //checking for sign bit
-    int S = twos_comp_displ_int(registers.a);
-    if(S > 127) {
+    if(registers.a > 127) {
         set_sign_flag(1);
     }
     else {
@@ -1780,8 +1765,7 @@ void ADC_a_e() {
     }
 
     //checking for sign bit
-    int S = twos_comp_displ_int(registers.a);
-    if(S > 127) {
+    if(registers.a > 127) {
         set_sign_flag(1);
     }
     else {
@@ -1836,8 +1820,7 @@ void ADC_a_f() {
     }
 
     //checking for sign bit
-    int S = twos_comp_displ_int(registers.a);
-    if(S > 127) {
+    if(registers.a > 127) {
         set_sign_flag(1);
     }
     else {
@@ -1892,8 +1875,7 @@ void ADC_a_l() {
     }
 
     //checking for sign bit
-    int S = twos_comp_displ_int(registers.a);
-    if(S > 127) {
+    if(registers.a > 127) {
         set_sign_flag(1);
     }
     else {
@@ -1949,8 +1931,7 @@ void ADC_a_8bit_n() {
     }
 
     //checking for sign bit
-    int S = twos_comp_displ_int(registers.a);
-    if(S > 127) {
+    if(registers.a > 127) {
         set_sign_flag(1);
     }
     else {
@@ -2008,8 +1989,7 @@ void ADC_a_memoryOf_hl() {
     }
 
     //checking for sign bit
-    int S = twos_comp_displ_int(registers.a);
-    if(S > 127) {
+    if(registers.a > 127) {
         set_sign_flag(1);
     }
     else {
@@ -2065,8 +2045,7 @@ void ADC_a_memoryOf_IXplusD() {
     }
 
     //checking for sign bit
-    int S = twos_comp_displ_int(registers.a);
-    if(S > 127) {
+    if(registers.a > 127) {
         set_sign_flag(1);
     }
     else {
@@ -2123,8 +2102,7 @@ void ADC_a_memoryOf_IYplusD() {
     }
 
     //checking for sign bit
-    int S = twos_comp_displ_int(registers.a);
-    if(S > 127) {
+    if(registers.a > 127) {
         set_sign_flag(1);
     }
     else {
@@ -2183,7 +2161,553 @@ void SUB_a() {
     }
 
     //checking sign flag: if result > 127
-    
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+}
+
+void SUB_b() {
+    int A = registers.a;
+    int R = registers.b;
+
+    //doing the subtraction
+    registers.a = (registers.a - registers.b) % 256;
+
+    //checking carry - if difference < 0
+    if(A - R < 0) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    //checking add/subtract flag 
+    set_add_sub_flag(1);
+
+    //checking parity/overflow - if signed difference < -128 or > 127
+    int signed_difference = twos_comp_displ_int(A) - twos_comp_displ_int(R);
+    if((signed_difference < -128) || (signed_difference > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking half carry flag : if A%16 - R%16 < 0
+    int half_carry_check = (A%16) - (R%16);
+    if(half_carry_check < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //checking zero flag : if result is 0
+    if(registers.a < 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking sign flag: if result > 127
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+}
+
+void SUB_c() {
+    int A = registers.a;
+    int R = registers.c;
+
+    //doing the subtraction
+    registers.a = (registers.a - registers.c) % 256;
+
+    //checking carry - if difference < 0
+    if(A - R < 0) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    //checking add/subtract flag 
+    set_add_sub_flag(1);
+
+    //checking parity/overflow - if signed difference < -128 or > 127
+    int signed_difference = twos_comp_displ_int(A) - twos_comp_displ_int(R);
+    if((signed_difference < -128) || (signed_difference > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking half carry flag : if A%16 - R%16 < 0
+    int half_carry_check = (A%16) - (R%16);
+    if(half_carry_check < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //checking zero flag : if result is 0
+    if(registers.a < 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking sign flag: if result > 127
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+}
+
+void SUB_d() {
+    int A = registers.a;
+    int R = registers.d;
+
+    //doing the subtraction
+    registers.a = (registers.a - registers.d) % 256;
+
+    //checking carry - if difference < 0
+    if(A - R < 0) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    //checking add/subtract flag 
+    set_add_sub_flag(1);
+
+    //checking parity/overflow - if signed difference < -128 or > 127
+    int signed_difference = twos_comp_displ_int(A) - twos_comp_displ_int(R);
+    if((signed_difference < -128) || (signed_difference > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking half carry flag : if A%16 - R%16 < 0
+    int half_carry_check = (A%16) - (R%16);
+    if(half_carry_check < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //checking zero flag : if result is 0
+    if(registers.a < 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking sign flag: if result > 127
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+}
+
+void SUB_e() {
+    int A = registers.a;
+    int R = registers.e;
+
+    //doing the subtraction
+    registers.a = (registers.a - registers.e) % 256;
+
+    //checking carry - if difference < 0
+    if(A - R < 0) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    //checking add/subtract flag 
+    set_add_sub_flag(1);
+
+    //checking parity/overflow - if signed difference < -128 or > 127
+    int signed_difference = twos_comp_displ_int(A) - twos_comp_displ_int(R);
+    if((signed_difference < -128) || (signed_difference > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking half carry flag : if A%16 - R%16 < 0
+    int half_carry_check = (A%16) - (R%16);
+    if(half_carry_check < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //checking zero flag : if result is 0
+    if(registers.a < 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking sign flag: if result > 127
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+}
+
+void SUB_f() {
+    int A = registers.a;
+    int R = registers.f;
+
+    //doing the subtraction
+    registers.a = (registers.a - registers.f) % 256;
+
+    //checking carry - if difference < 0
+    if(A - R < 0) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    //checking add/subtract flag 
+    set_add_sub_flag(1);
+
+    //checking parity/overflow - if signed difference < -128 or > 127
+    int signed_difference = twos_comp_displ_int(A) - twos_comp_displ_int(R);
+    if((signed_difference < -128) || (signed_difference > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking half carry flag : if A%16 - R%16 < 0
+    int half_carry_check = (A%16) - (R%16);
+    if(half_carry_check < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //checking zero flag : if result is 0
+    if(registers.a < 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking sign flag: if result > 127
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+}
+
+void SUB_l() {
+    int A = registers.a;
+    int R = registers.l;
+
+    //doing the subtraction
+    registers.a = (registers.a - registers.l) % 256;
+
+    //checking carry - if difference < 0
+    if(A - R < 0) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    //checking add/subtract flag 
+    set_add_sub_flag(1);
+
+    //checking parity/overflow - if signed difference < -128 or > 127
+    int signed_difference = twos_comp_displ_int(A) - twos_comp_displ_int(R);
+    if((signed_difference < -128) || (signed_difference > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking half carry flag : if A%16 - R%16 < 0
+    int half_carry_check = (A%16) - (R%16);
+    if(half_carry_check < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //checking zero flag : if result is 0
+    if(registers.a < 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking sign flag: if result > 127
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+}
+//SUB n subtract 8bit n from accumulator and store in accumulator
+void SUB_8bit_n() {
+    int A = registers.a;
+    int R = readMemory(registers.pc);
+
+    //doing the subtraction
+    registers.a = (registers.a - readMemory(registers.pc)) % 256;
+
+    //checking carry - if difference < 0
+    if(A - R < 0) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    //checking add/subtract flag 
+    set_add_sub_flag(1);
+
+    //checking parity/overflow - if signed difference < -128 or > 127
+    int signed_difference = twos_comp_displ_int(A) - twos_comp_displ_int(R);
+    if((signed_difference < -128) || (signed_difference > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking half carry flag : if A%16 - R%16 < 0
+    int half_carry_check = (A%16) - (R%16);
+    if(half_carry_check < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //checking zero flag : if result is 0
+    if(registers.a < 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking sign flag: if result > 127
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    ++registers.pc;
+}
+
+//SUB (HL) subtract from accumulator value at (HL) and store in accumulator
+void SUB_memoryOf_hl() {
+    int A = registers.a;
+    int R = readMemory(address_of_HL());
+
+    //doing the subtraction
+    registers.a = (registers.a - readMemory(address_of_HL())) % 256;
+
+    //checking carry - if difference < 0
+    if(A - R < 0) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    //checking add/subtract flag 
+    set_add_sub_flag(1);
+
+    //checking parity/overflow - if signed difference < -128 or > 127
+    int signed_difference = twos_comp_displ_int(A) - twos_comp_displ_int(R);
+    if((signed_difference < -128) || (signed_difference > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking half carry flag : if A%16 - R%16 < 0
+    int half_carry_check = (A%16) - (R%16);
+    if(half_carry_check < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //checking zero flag : if result is 0
+    if(registers.a < 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking sign flag: if result > 127
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+}
+
+//SUB (IX+d) subtract from accumulator value at (IX+d), store in accumulator
+//d is a twos complement displaced integer
+void SUB_IXplusD() {
+    int A = registers.a;
+    int R = readMemory(address_of_IXplusD());
+
+    //doing the subtraction
+    registers.a = (registers.a - readMemory(address_of_IXplusD())) % 256;
+
+    //checking carry - if difference < 0
+    if(A - R < 0) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    //checking add/subtract flag 
+    set_add_sub_flag(1);
+
+    //checking parity/overflow - if signed difference < -128 or > 127
+    int signed_difference = twos_comp_displ_int(A) - twos_comp_displ_int(R);
+    if((signed_difference < -128) || (signed_difference > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking half carry flag : if A%16 - R%16 < 0
+    int half_carry_check = (A%16) - (R%16);
+    if(half_carry_check < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //checking zero flag : if result is 0
+    if(registers.a < 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking sign flag: if result > 127
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    ++registers.pc;
+}
+
+//SUB (IY+d) subtract from accumulator value at (IY+d), store in accumulator
+//d is a twos complement displaced integer
+void SUB_IYplusD() {
+    int A = registers.a;
+    int R = readMemory(address_of_IYplusD());
+
+    //doing the subtraction
+    registers.a = (registers.a - readMemory(address_of_IYplusD())) % 256;
+
+    //checking carry - if difference < 0
+    if(A - R < 0) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
+
+    //checking add/subtract flag 
+    set_add_sub_flag(1);
+
+    //checking parity/overflow - if signed difference < -128 or > 127
+    int signed_difference = twos_comp_displ_int(A) - twos_comp_displ_int(R);
+    if((signed_difference < -128) || (signed_difference > 127)) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //checking half carry flag : if A%16 - R%16 < 0
+    int half_carry_check = (A%16) - (R%16);
+    if(half_carry_check < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //checking zero flag : if result is 0
+    if(registers.a < 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //checking sign flag: if result > 127
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    ++registers.pc;
 }
 
 // All functions using (IX+d) go here
@@ -2230,6 +2754,9 @@ void functions_using_IXplusD() {
 
         //ADC a, (IX+d)
         case 0x8E: ADC_a_memoryOf_IXplusD();break;
+
+        //SUB (IX+d)
+        case 0x96: SUB_IXplusD();break;
         
     }
 }
@@ -2278,6 +2805,9 @@ void functions_using_IYplusD() {
 
         //ADC a, (IX+d)
         case 0x8E: ADC_a_memoryOf_IYplusD();break;
+
+        //SUB (IY+d)
+        case 0x96: SUB_IYplusD();break;
     }
 }
 
@@ -2502,21 +3032,324 @@ void decodeInstruction(uint8_t opcode) {
 
         //ADC A,(HL)
         case 0x8E: ADC_a_memoryOf_hl();break;
+
+        //SUB A
+        case 0x97: SUB_a();break;
+
+        //SUB B
+        case 0x90: SUB_b();break;
+
+        //SUB C
+        case 0x91: SUB_c();break;
+
+        //SUB D
+        case 0x92: SUB_c();break;
+
+        //SUB E
+        case 0x93: SUB_e();break;
+
+        //SUB F
+        case 0x94: SUB_f();break;
+
+        //SUB L
+        case 0x95: SUB_l();break;
+
+        //SUB (HL)
+        case 0x96: SUB_memoryOf_hl();break;
+
+        //SUB n
+        case 0xD6: SUB_8bit_n();break;
     }
 }
 
+// functions to check values of different registers and flags
+// fancy print statements nothing else
+/*
+pass 0 for unsigned value
+pass 1 for signed value 
+pass 2 for both
+*/
+void register_a_val(int choice) {
+    switch(choice) {
+        case 0: 
+            std::cout << "register A unsigned :" << static_cast<int>(registers.a) << std::endl;
+            break;
+        case 1:
+            std::cout << "register A signed :" << static_cast<int>(twos_comp_displ_int(registers.a)) << std::endl;
+            break;
+        case 2:
+            std::cout << "register A unsigned :" << static_cast<int>(registers.a) << std::endl;
+            std::cout << "register A signed :" << static_cast<int>(twos_comp_displ_int(registers.a)) << std::endl;
+            break;
+
+    }
+} 
+void register_b_val(int choice) {
+    switch(choice) {
+        case 0: 
+            std::cout << "register B unsigned :" << static_cast<int>(registers.b) << std::endl;
+            break;
+        case 1:
+            std::cout << "register B signed :" << static_cast<int>(twos_comp_displ_int(registers.b)) << std::endl;
+            break;
+        case 2:
+            std::cout << "register B unsigned :" << static_cast<int>(registers.b) << std::endl;
+            std::cout << "register B signed :" << static_cast<int>(twos_comp_displ_int(registers.b)) << std::endl;
+            break;
+
+    }
+} 
+
+void register_c_val(int choice) {
+    switch(choice) {
+        case 0: 
+            std::cout << "register C unsigned :" << static_cast<int>(registers.c) << std::endl;
+            break;
+        case 1:
+            std::cout << "register C signed :" << static_cast<int>(twos_comp_displ_int(registers.c)) << std::endl;
+            break;
+        case 2:
+            std::cout << "register C unsigned :" << static_cast<int>(registers.c) << std::endl;
+            std::cout << "register C signed :" << static_cast<int>(twos_comp_displ_int(registers.c)) << std::endl;
+            break;
+
+    }
+} 
+
+void register_d_val(int choice) {
+    switch(choice) {
+        case 0: 
+            std::cout << "register D unsigned :" << static_cast<int>(registers.d) << std::endl;
+            break;
+        case 1:
+            std::cout << "register D signed :" << static_cast<int>(twos_comp_displ_int(registers.d)) << std::endl;
+            break;
+        case 2:
+            std::cout << "register D unsigned :" << static_cast<int>(registers.d) << std::endl;
+            std::cout << "register D signed :" << static_cast<int>(twos_comp_displ_int(registers.d)) << std::endl;
+            break;
+
+    }
+} 
+
+void register_e_val(int choice) {
+    switch(choice) {
+        case 0: 
+            std::cout << "register E unsigned :" << static_cast<int>(registers.e) << std::endl;
+            break;
+        case 1:
+            std::cout << "register E signed :" << static_cast<int>(twos_comp_displ_int(registers.e)) << std::endl;
+            break;
+        case 2:
+            std::cout << "register E unsigned :" << static_cast<int>(registers.e) << std::endl;
+            std::cout << "register E signed :" << static_cast<int>(twos_comp_displ_int(registers.e)) << std::endl;
+            break;
+
+    }
+} 
+
+void register_f_val(int choice) {
+    switch(choice) {
+        case 0: 
+            std::cout << "register F unsigned :" << static_cast<int>(registers.f) << std::endl;
+            break;
+        case 1:
+            std::cout << "register F signed :" << static_cast<int>(twos_comp_displ_int(registers.f)) << std::endl;
+            break;
+        case 2:
+            std::cout << "register F unsigned :" << static_cast<int>(registers.f) << std::endl;
+            std::cout << "register F signed :" << static_cast<int>(twos_comp_displ_int(registers.f)) << std::endl;
+            break;
+
+    }
+} 
+
+void register_h_val(int choice) {
+    switch(choice) {
+        case 0: 
+            std::cout << "register H unsigned :" << static_cast<int>(registers.h) << std::endl;
+            break;
+        case 1:
+            std::cout << "register H signed :" << static_cast<int>(twos_comp_displ_int(registers.h)) << std::endl;
+            break;
+        case 2:
+            std::cout << "register H unsigned :" << static_cast<int>(registers.h) << std::endl;
+            std::cout << "register H signed :" << static_cast<int>(twos_comp_displ_int(registers.h)) << std::endl;
+            break;
+
+    }
+} 
+
+void register_l_val(int choice) {
+    switch(choice) {
+        case 0: 
+            std::cout << "register A unsigned :" << static_cast<int>(registers.l) << std::endl;
+            break;
+        case 1:
+            std::cout << "register A signed :" << static_cast<int>(twos_comp_displ_int(registers.l)) << std::endl;
+            break;
+        case 2:
+            std::cout << "register A unsigned :" << static_cast<int>(registers.l) << std::endl;
+            std::cout << "register A signed :" << static_cast<int>(twos_comp_displ_int(registers.l)) << std::endl;
+            break;
+
+    }
+} 
+
+void program_counter_position() {
+    std::cout << "program counter :"<< static_cast<int>(registers.pc) << std::endl;
+}
+
+//status of various flags from register f
+void check_carry_flag() {
+    int value = bitExtracted(registers.f,1,0);
+    std::cout << "carry flag :"<<static_cast<int>(value) << std::endl;
+}
+
+void check_add_sub_flag() {
+    int value = bitExtracted(registers.f,1,1);
+    std::cout << "add/subtract flag :"<<static_cast<int>(value) << std::endl;
+}
+
+void check_parity_overflow_flag() {
+    int value = bitExtracted(registers.f,1,2);
+    std::cout << "parity/overflow flag :"<<static_cast<int>(value) << std::endl;
+}
+
+void check_half_carry_flag() {
+    int value = bitExtracted(registers.f,1,4);
+    std::cout << "half carry flag:"<<static_cast<int>(value) << std::endl;
+}
+
+void check_zero_flag() {
+    int value = bitExtracted(registers.f,1,6);
+    std::cout << "zero flag :"<<static_cast<int>(value) << std::endl;
+}
+
+void check_sign_flag() {
+    int value = bitExtracted(registers.f,1,7);
+    std::cout << "sign flag :"<<static_cast<int>(value) << std::endl;
+}
+/*
+case 0 : all registers unsigned
+case 1 : all registers signed
+case 2 : all registers unsigned and signed
+case 3 : all flags
+case 4 : all flags and registers unsigned
+case 5 : all flags and registers signed
+case 6 : all flags and registers both signed and unsigned
+*/
+void check_all_registers_flags(int choice) {
+    switch(choice) {
+        case 0: //all registers unsigned
+            register_a_val(0);
+            register_b_val(0);
+            register_c_val(0);
+            register_d_val(0);
+            register_e_val(0);
+            register_f_val(0);
+            register_h_val(0);
+            register_l_val(0);
+            std::cout << "----------------" << std::endl;
+            break;
+        case 1: //all registers signed
+            register_a_val(1);
+            register_b_val(1);
+            register_c_val(1);
+            register_d_val(1);
+            register_e_val(1);
+            register_f_val(1);
+            register_h_val(1);
+            register_l_val(1);
+            std::cout << "----------------" << std::endl;
+            break;
+        case 2: //all registers both unsigned and signed
+            register_a_val(2);
+            register_b_val(2);
+            register_c_val(2);
+            register_d_val(2);
+            register_e_val(2);
+            register_f_val(2);
+            register_h_val(2);
+            register_l_val(2);
+            std::cout << "----------------" << std::endl;
+            break;
+        case 3: //all flags
+            check_carry_flag();
+            check_add_sub_flag();
+            check_parity_overflow_flag();
+            check_half_carry_flag();
+            check_zero_flag();
+            check_sign_flag();
+            std::cout << "----------------" << std::endl;
+            break;
+        case 4: //all flags + registers unsigned
+            check_carry_flag();
+            check_add_sub_flag();
+            check_parity_overflow_flag();
+            check_half_carry_flag();
+            check_zero_flag();
+            check_sign_flag();
+            register_a_val(0);
+            register_b_val(0);
+            register_c_val(0);
+            register_d_val(0);
+            register_e_val(0);
+            register_f_val(0);
+            register_h_val(0);
+            register_l_val(0);
+            std::cout << "----------------" << std::endl;
+            break;
+        case 5: //all flags + registers signed
+            check_carry_flag();
+            check_add_sub_flag();
+            check_parity_overflow_flag();
+            check_half_carry_flag();
+            check_zero_flag();
+            check_sign_flag();
+            register_a_val(1);
+            register_b_val(1);
+            register_c_val(1);
+            register_d_val(1);
+            register_e_val(1);
+            register_f_val(1);
+            register_h_val(1);
+            register_l_val(1);
+            std::cout << "----------------" << std::endl;
+            break;
+        case 6: //all flags + registers both unsigned and signed
+            check_carry_flag();
+            check_add_sub_flag();
+            check_parity_overflow_flag();
+            check_half_carry_flag();
+            check_zero_flag();
+            check_sign_flag();
+            register_a_val(2);
+            register_b_val(2);
+            register_c_val(2);
+            register_d_val(2);
+            register_e_val(2);
+            register_f_val(2);
+            register_h_val(2);
+            register_l_val(2);
+            std::cout << "----------------" << std::endl;
+            break;
+
+    }
+}
 int main(int argc, char *argv[]) {
+    int count = 1;
     loadProgram(argv[1],0x0000);
     while(registers.pc < 65535) {
         
         uint8_t opcode = fetchInstruction();
+        
         decodeInstruction(opcode);
-        std::cout << "program counter :"<< static_cast<int>(registers.pc) << std::endl;
-        std::cout << "accumulator :"<< static_cast<int>(registers.a) << std::endl;
-    }
+        std::cout << count << std::endl;
+        ++count;
+        check_all_registers_flags(3);
 
-    //std::cout << "memory at 0100 :" << static_cast<int>(memory[100]) << std::endl;
-    
+    }  
     return 0;
 }
 
