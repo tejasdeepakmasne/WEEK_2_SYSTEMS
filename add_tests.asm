@@ -10,4 +10,3 @@ add a,b
 ld b,42
 add a,b
 ld b,110
-add a,b

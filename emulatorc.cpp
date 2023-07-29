@@ -82,6 +82,10 @@ int bitExtracted(int number, int k, int p)
     return (((1 << k) - 1) & (number >> (p)));
 }
 
+bool isEvenParity(int n) {
+    bool even_parity
+}
+
 void set_carry_flag(int i) {
     switch(i) {
         case 1: registers.f |= 1;break;
@@ -3161,7 +3165,7 @@ void DEC_a() {
     }
 
     //half carry
-    if(r < 0) {
+    if(r%16 < 0) {
         set_half_carry_flag(1);
     }
     else {
@@ -3202,7 +3206,7 @@ void DEC_b() {
     }
 
     //half carry
-    if(r < 0) {
+    if(r%16 < 0) {
         set_half_carry_flag(1);
     }
     else {
@@ -3243,7 +3247,7 @@ void DEC_c() {
     }
 
     //half carry
-    if(r < 0) {
+    if(r%16 < 0) {
         set_half_carry_flag(1);
     }
     else {
@@ -3284,7 +3288,7 @@ void DEC_d() {
     }
 
     //half carry
-    if(r < 0) {
+    if(r%16 < 0) {
         set_half_carry_flag(1);
     }
     else {
@@ -3325,7 +3329,7 @@ void DEC_e() {
     }
 
     //half carry
-    if(r < 0) {
+    if(r%16 < 0) {
         set_half_carry_flag(1);
     }
     else {
@@ -3366,7 +3370,7 @@ void DEC_f() {
     }
 
     //half carry
-    if(r < 0) {
+    if(r%16 < 0) {
         set_half_carry_flag(1);
     }
     else {
@@ -3390,7 +3394,249 @@ void DEC_f() {
     }
 }
 
+void DEC_h() {
+    int r = registers.h;
+    --registers.h;
 
+    //add/sub flag
+    set_add_sub_flag(1);
+
+    //parity/overflow
+    int signed_result = twos_comp_displ_int(registers.h);
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //half carry
+    if(r%16 < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //zero flag
+    if(registers.h == 0) {
+        set_zero_flag(1);
+    }  
+    else {
+        set_zero_flag(0);
+    }
+
+    //sign flag
+    if(registers.h > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+}
+
+void DEC_l() {
+    int r = registers.l;
+    --registers.l;
+
+    //add/sub flag
+    set_add_sub_flag(1);
+
+    //parity/overflow
+    int signed_result = twos_comp_displ_int(registers.l);
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //half carry
+    if(r%16 < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //zero flag
+    if(registers.l == 0) {
+        set_zero_flag(1);
+    }  
+    else {
+        set_zero_flag(0);
+    }
+
+    //sign flag
+    if(registers.l > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+}
+
+//DEC (HL) decrement the value stored at (HL) by 1
+void DEC_memoryOf_HL() {
+    uint8_t value = readMemory(address_of_HL());
+    int intial_value = readMemory(address_of_HL());
+    --value;
+    writeMemory(address_of_HL(),value);
+
+    //parity/overflow
+    int signed_result = twos_comp_displ_int(value);
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //half carry
+    if(intial_value %16 < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //zero flag
+    if(value == 0) {
+        set_zero_flag(1);
+    }  
+    else {
+        set_zero_flag(0);
+    }
+
+    //sign flag
+    if(value > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+}
+
+//DEC (IX+d) decrement the value stored at (IX+d) by 1
+void DEC_memoryOf_IXplusD() {
+    uint8_t value = readMemory(address_of_IXplusD());
+    int intial_value = readMemory(address_of_IXplusD());
+    --value;
+    writeMemory(address_of_IXplusD(),value);
+
+    //parity/overflow
+    int signed_result = twos_comp_displ_int(value);
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //half carry
+    if(intial_value %16 < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //zero flag
+    if(value == 0) {
+        set_zero_flag(1);
+    }  
+    else {
+        set_zero_flag(0);
+    }
+
+    //sign flag
+    if(value > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+    ++registers.pc;
+}
+
+//DEC (IX+d) decrement the value stored at (IX+d) by 1
+void DEC_memoryOf_IYplusD() {
+    uint8_t value = readMemory(address_of_IYplusD());
+    int intial_value = readMemory(address_of_IYplusD());
+    --value;
+    writeMemory(address_of_IYplusD(),value);
+
+    //parity/overflow
+    int signed_result = twos_comp_displ_int(value);
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //half carry
+    if(intial_value %16 < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //zero flag
+    if(value == 0) {
+        set_zero_flag(1);
+    }  
+    else {
+        set_zero_flag(0);
+    }
+
+    //sign flag
+    if(value > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+    ++registers.pc;
+}
+
+//AND s where s is register, (HL),(IX+d),(IY+d) or a 8bit number n
+void AND_a() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = registers.a;
+
+    //doing bitwise and
+    registers.a = A_in & opr;
+
+    //sign bit
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.a ==0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(1);
+
+    //parity/overflow flag
+
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry flag
+    set_carry_flag(0);
+}
 
 // All functions using (IX+d) go here
 void functions_using_IXplusD() {
@@ -3442,6 +3688,9 @@ void functions_using_IXplusD() {
 
         //INC (IX+d)
         case 0x34: INC_memoryOf_IXplusD();break;
+
+        //DEC (IX+d)
+        case 0x35: DEC_memoryOf_IXplusD();break;
         
     }
 }
@@ -3496,6 +3745,9 @@ void functions_using_IYplusD() {
 
         //INC (IY+d)
         case 0x34: INC_memoryOf_IYplusD();break;
+
+        //DEC (IY+d)
+        case 0x35: DEC_memoryOf_IYplusD();break;
     }
 }
 
@@ -3773,6 +4025,30 @@ void decodeInstruction(uint8_t opcode) {
 
         //INC (HL)
         case 0x34: INC_memoryOf_HL();break;
+
+        //DEC a
+        case 0x3D: DEC_a();break;
+
+        //DEC b
+        case 0x05: DEC_b();break;
+
+        //DEC c
+        case 0x0D: DEC_c();break;
+
+        //DEC d
+        case 0x15: DEC_d();break;
+
+        //DEC e
+        case 0x1D: DEC_e();break;
+
+        //DEC h
+        case 0x25: DEC_h();break;
+
+        //DEC l
+        case 0x2D: DEC_l();break;
+
+        //DEC (HL)
+        case 0x35: DEC_memoryOf_HL();break;
     }
 }
 
