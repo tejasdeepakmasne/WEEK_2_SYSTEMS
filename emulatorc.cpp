@@ -79,13 +79,13 @@ bit 7: Sign Flag - S
 // and returns the extracted value as integer
 int bitExtracted(int number, int k, int p)
 {
-    return (((1 << k) - 1) & (number >> (p - 1)));
+    return (((1 << k) - 1) & (number >> (p)));
 }
 
 void set_carry_flag(int i) {
     switch(i) {
-        case 1: registers.f |= 0b1;break;
-        case 0: registers.f &= ~0b1;break;
+        case 1: registers.f |= 1;break;
+        case 0: registers.f &= ~1;break;
     }
 }
 
@@ -891,7 +891,7 @@ void ADD_a_a() {
     registers.a = (registers.a + registers.a) % 256;
 
     //checking for carry
-    if (registers.a > 255) {
+    if (A+R > 255) {
         set_carry_flag(1);
     }
     else {
@@ -945,7 +945,7 @@ void ADD_a_b() {
     registers.a = (registers.a + registers.b) % 256;
 
     //checking for carry
-    if (registers.a > 255) {
+    if (A+R > 255) {
         set_carry_flag(1);
     }
     else {
@@ -999,7 +999,7 @@ void ADD_a_c() {
     registers.a = (registers.a + registers.c) % 256;
 
     //checking for carry
-    if (registers.a > 255) {
+    if (A+R > 255) {
         set_carry_flag(1);
     }
     else {
@@ -1050,7 +1050,7 @@ void ADD_a_d() {
     int R = registers.d;
     
     // doing the addition
-    registers.a = (registers.a + registers.d) % 256;
+    registers.a = (A+R + registers.d) % 256;
 
     //checking for carry
     if (registers.a > 255) {
@@ -1107,7 +1107,7 @@ void ADD_a_e() {
     registers.a = (registers.a + registers.e) % 256;
 
     //checking for carry
-    if (registers.a > 255) {
+    if (A+R > 255) {
         set_carry_flag(1);
     }
     else {
@@ -1161,7 +1161,7 @@ void ADD_a_f() {
     registers.a = (registers.a + registers.f) % 256;
 
     //checking for carry
-    if (registers.a > 255) {
+    if (A+R > 255) {
         set_carry_flag(1);
     }
     else {
@@ -1215,7 +1215,7 @@ void ADD_a_l() {
     registers.a = (registers.a + registers.l) % 256;
 
     //checking for carry
-    if (registers.a > 255) {
+    if (A+R > 255) {
         set_carry_flag(1);
     }
     else {
@@ -1270,7 +1270,7 @@ void ADD_a_8bit_n() {
     registers.a = (registers.a + readMemory(registers.pc)) % 256;
 
     //checking for carry
-    if (registers.a > 255) {
+    if (A+R > 255) {
         set_carry_flag(1);
     }
     else {
@@ -1327,7 +1327,7 @@ void ADD_a_memoryOf_HL() {
     registers.a = (registers.a + readMemory(address_of_HL())) % 256;
 
     //checking for carry
-    if (registers.a > 255) {
+    if (A+R > 255) {
         set_carry_flag(1);
     }
     else {
@@ -1387,7 +1387,7 @@ void ADD_a_memoryOf_IXplusD() {
     registers.a = (registers.a + readMemory(address_of_IXplusD())) % 256;
 
     //checking for carry
-    if (registers.a > 255) {
+    if (A+R > 255) {
         set_carry_flag(1);
     }
     else {
@@ -1448,7 +1448,7 @@ void ADD_a_memoryOf_IYplusD() {
     registers.a = (registers.a + readMemory(address_of_IYplusD())) % 256;
 
     //checking for carry
-    if (registers.a > 255) {
+    if (A+R > 255) {
         set_carry_flag(1);
     }
     else {
@@ -1508,7 +1508,7 @@ void ADC_a_a() {
     registers.a = (registers.a + registers.a + carry_value)%256;
 
     //checking for carry
-    if (registers.a > 255) {
+    if (A+R+carry_value > 255) {
         set_carry_flag(1);
     }
     else {
@@ -1563,7 +1563,7 @@ void ADC_a_b() {
     registers.a = (registers.a + registers.b + carry_value)%256;
 
     //checking for carry
-    if (registers.a > 255) {
+    if (A+R+carry_value > 255) {
         set_carry_flag(1);
     }
     else {
@@ -1618,7 +1618,7 @@ void ADC_a_c() {
     registers.a = (registers.a + registers.c + carry_value)%256;
 
     //checking for carry
-    if (registers.a > 255) {
+    if (A+R+carry_value > 255) {
         set_carry_flag(1);
     }
     else {
@@ -1673,7 +1673,7 @@ void ADC_a_d() {
     registers.a = (registers.a + registers.d + carry_value)%256;
 
     //checking for carry
-    if (registers.a > 255) {
+    if (A+R+carry_value > 255) {
         set_carry_flag(1);
     }
     else {
@@ -1728,7 +1728,7 @@ void ADC_a_e() {
     registers.a = (registers.a + registers.e + carry_value)%256;
 
     //checking for carry
-    if (registers.a > 255) {
+    if (A+R+carry_value > 255) {
         set_carry_flag(1);
     }
     else {
@@ -1783,7 +1783,7 @@ void ADC_a_f() {
     registers.a = (registers.a + registers.f + carry_value)%256;
 
     //checking for carry
-    if (registers.a > 255) {
+    if (A+R+carry_value > 255) {
         set_carry_flag(1);
     }
     else {
@@ -1838,7 +1838,7 @@ void ADC_a_l() {
     registers.a = (registers.a + registers.l + carry_value)%256;
 
     //checking for carry
-    if (registers.a > 255) {
+    if (A+R+carry_value > 255) {
         set_carry_flag(1);
     }
     else {
@@ -1894,7 +1894,7 @@ void ADC_a_8bit_n() {
     registers.a = (registers.a + readMemory(registers.pc)+carry_value) % 256;
 
     //checking for carry
-    if (registers.a > 255) {
+    if (A+R+carry_value > 255) {
         set_carry_flag(1);
     }
     else {
@@ -1952,7 +1952,7 @@ void ADC_a_memoryOf_hl() {
     registers.a = (registers.a + readMemory(address_of_HL())+carry_value) % 256;
 
     //checking for carry
-    if (registers.a > 255) {
+    if (A+R+carry_value > 255) {
         set_carry_flag(1);
     }
     else {
@@ -2008,7 +2008,7 @@ void ADC_a_memoryOf_IXplusD() {
     registers.a = (registers.a + readMemory(address_of_IXplusD())+carry_value) % 256;
 
     //checking for carry
-    if (registers.a > 255) {
+    if (A+R+carry_value > 255) {
         set_carry_flag(1);
     }
     else {
@@ -2065,7 +2065,7 @@ void ADC_a_memoryOf_IYplusD() {
     registers.a = (registers.a + readMemory(address_of_IYplusD())+carry_value) % 256;
 
     //checking for carry
-    if (registers.a > 255) {
+    if (A+R+carry_value > 255) {
         set_carry_flag(1);
     }
     else {
@@ -2710,6 +2710,688 @@ void SUB_IYplusD() {
     ++registers.pc;
 }
 
+/*
+SBC A,s where s is a operand. the operand and carry flag is subtacted from 
+the accumulator and the result stored in accumulator
+*/
+//TODO : implement SBC
+void SBC_a_a() {
+    int A = registers.a;
+    int R = registers.a;
+
+    int carry_value = bitExtracted(registers.f,1,0);
+    //doing the subtraction
+    int diff = A - R - carry_value;
+    registers.a = diff % 256;
+
+
+}
+// INC r - register r is incremented by 1
+void INC_a() {
+    int r = registers.a;
+    ++registers.a;
+
+    //add/sub flag
+    set_add_sub_flag(0);
+    //parity overflow flag
+    int signed_result = twos_comp_displ_int(registers.a);
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //half carry flag 
+    if(r % 16 > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //zero flag
+    if(registers.a == 0){
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //sign flag
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+    
+}
+
+void INC_b() {
+    int r = registers.b;
+    ++registers.b;
+
+    //add/sub flag
+    set_add_sub_flag(0);
+    //parity overflow flag
+    int signed_result = twos_comp_displ_int(registers.b);
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //half carry flag 
+    if(r % 16 > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //zero flag
+    if(registers.b == 0){
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //sign flag
+    if(registers.b > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+    
+}
+
+void INC_c() {
+    int r = registers.c;
+    ++registers.c;
+
+    //add/sub flag
+    set_add_sub_flag(0);
+    //parity overflow flag
+    int signed_result = twos_comp_displ_int(registers.c);
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //half carry flag 
+    if(r % 16 > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //zero flag
+    if(registers.c == 0){
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //sign flag
+    if(registers.c > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+    
+}
+
+void INC_d() {
+    int r = registers.d;
+    ++registers.d;
+
+    //add/sub flag
+    set_add_sub_flag(0);
+    //parity overflow flag
+    int signed_result = twos_comp_displ_int(registers.d);
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //half carry flag 
+    if(r % 16 > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //zero flag
+    if(registers.d == 0){
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //sign flag
+    if(registers.d > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+    
+}
+
+void INC_e() {
+    int r = registers.e;
+    ++registers.e;
+
+    //add/sub flag
+    set_add_sub_flag(0);
+    //parity overflow flag
+    int signed_result = twos_comp_displ_int(registers.e);
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //half carry flag 
+    if(r % 16 > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //zero flag
+    if(registers.e == 0){
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //sign flag
+    if(registers.e > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+    
+}
+
+void INC_h() {
+    int r = registers.h;
+    ++registers.h;
+
+    //add/sub flag
+    set_add_sub_flag(0);
+    //parity overflow flag
+    int signed_result = twos_comp_displ_int(registers.h);
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //half carry flag 
+    if(r % 16 > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //zero flag
+    if(registers.h == 0){
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //sign flag
+    if(registers.h > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+    
+}
+
+void INC_l() {
+    int r = registers.l;
+    ++registers.l;
+
+    //add/sub flag
+    set_add_sub_flag(0);
+    //parity overflow flag
+    int signed_result = twos_comp_displ_int(registers.l);
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //half carry flag 
+    if(r % 16 > 15) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //zero flag
+    if(registers.l == 0){
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //sign flag
+    if(registers.l > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+    
+}
+
+//increment the value stored at location (HL)
+void INC_memoryOf_HL() {
+    uint8_t value = readMemory(address_of_HL());
+    ++value;
+    writeMemory(address_of_HL(),value);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //parity/overflow
+    int signed_result = twos_comp_displ_int(value);
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+    //TODO : does this work????
+    //half carry
+    if(((value-1) % 16)> 15) {
+        set_half_carry_flag(1);
+    }   
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //zero flag
+    if(value == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //sign flag
+    if(value > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+}
+
+void INC_memoryOf_IXplusD() {
+    uint8_t value = readMemory(address_of_IXplusD());
+    ++value;
+    writeMemory(address_of_IXplusD(),value);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //parity/overflow
+    int signed_result = twos_comp_displ_int(value);
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+    
+    //half carry
+    if(((value-1) % 16)> 15) {
+        set_half_carry_flag(1);
+    }   
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //zero flag
+    if(value == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //sign flag
+    if(value > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+    ++registers.pc;
+}
+
+void INC_memoryOf_IYplusD() {
+    uint8_t value = readMemory(address_of_IYplusD());
+    ++value;
+    writeMemory(address_of_IXplusD(),value);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //parity/overflow
+    int signed_result = twos_comp_displ_int(value);
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+    
+    //half carry
+    if(((value-1) % 16)> 15) {
+        set_half_carry_flag(1);
+    }   
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //zero flag
+    if(value == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //sign flag
+    if(value > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+    ++registers.pc;
+}
+
+//DEC r, value in register r is decremented by 1
+void DEC_a() {
+    int r = registers.a;
+    --registers.a;
+
+    //add/sub flag
+    set_add_sub_flag(1);
+
+    //parity/overflow
+    int signed_result = twos_comp_displ_int(registers.a);
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //half carry
+    if(r < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }  
+    else {
+        set_zero_flag(0);
+    }
+
+    //sign flag
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+}
+
+void DEC_b() {
+    int r = registers.b;
+    --registers.b;
+
+    //add/sub flag
+    set_add_sub_flag(1);
+
+    //parity/overflow
+    int signed_result = twos_comp_displ_int(registers.b);
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //half carry
+    if(r < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //zero flag
+    if(registers.b == 0) {
+        set_zero_flag(1);
+    }  
+    else {
+        set_zero_flag(0);
+    }
+
+    //sign flag
+    if(registers.b > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+}
+
+void DEC_c() {
+    int r = registers.c;
+    --registers.c;
+
+    //add/sub flag
+    set_add_sub_flag(1);
+
+    //parity/overflow
+    int signed_result = twos_comp_displ_int(registers.c);
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //half carry
+    if(r < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //zero flag
+    if(registers.c == 0) {
+        set_zero_flag(1);
+    }  
+    else {
+        set_zero_flag(0);
+    }
+
+    //sign flag
+    if(registers.c > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+}
+
+void DEC_d() {
+    int r = registers.d;
+    --registers.d;
+
+    //add/sub flag
+    set_add_sub_flag(1);
+
+    //parity/overflow
+    int signed_result = twos_comp_displ_int(registers.d);
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //half carry
+    if(r < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //zero flag
+    if(registers.d == 0) {
+        set_zero_flag(1);
+    }  
+    else {
+        set_zero_flag(0);
+    }
+
+    //sign flag
+    if(registers.d > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+}
+
+void DEC_e() {
+    int r = registers.e;
+    --registers.e;
+
+    //add/sub flag
+    set_add_sub_flag(1);
+
+    //parity/overflow
+    int signed_result = twos_comp_displ_int(registers.e);
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //half carry
+    if(r < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //zero flag
+    if(registers.e == 0) {
+        set_zero_flag(1);
+    }  
+    else {
+        set_zero_flag(0);
+    }
+
+    //sign flag
+    if(registers.e > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+}
+
+void DEC_f() {
+    int r = registers.f;
+    --registers.f;
+
+    //add/sub flag
+    set_add_sub_flag(1);
+
+    //parity/overflow
+    int signed_result = twos_comp_displ_int(registers.f);
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //half carry
+    if(r < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //zero flag
+    if(registers.f == 0) {
+        set_zero_flag(1);
+    }  
+    else {
+        set_zero_flag(0);
+    }
+
+    //sign flag
+    if(registers.f > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+}
+
+
+
 // All functions using (IX+d) go here
 void functions_using_IXplusD() {
     uint8_t current_opcode = fetchInstruction();
@@ -2757,6 +3439,9 @@ void functions_using_IXplusD() {
 
         //SUB (IX+d)
         case 0x96: SUB_IXplusD();break;
+
+        //INC (IX+d)
+        case 0x34: INC_memoryOf_IXplusD();break;
         
     }
 }
@@ -2808,6 +3493,9 @@ void functions_using_IYplusD() {
 
         //SUB (IY+d)
         case 0x96: SUB_IYplusD();break;
+
+        //INC (IY+d)
+        case 0x34: INC_memoryOf_IYplusD();break;
     }
 }
 
@@ -3059,6 +3747,32 @@ void decodeInstruction(uint8_t opcode) {
 
         //SUB n
         case 0xD6: SUB_8bit_n();break;
+
+        //INC a
+        case 0x3C: INC_a();break;
+
+        //INC b
+        case 0x04: INC_b();break;
+
+        //INC c
+        case 0x0C: INC_c();break;
+
+        //INC d
+        case 0x14: INC_d();break;
+
+        //INC e
+        case 0x1C: INC_e();break;
+
+        //TODO : INC f?? wtf??
+
+        //INC h
+        case 0x24: INC_h();break;
+
+        //INC l
+        case 0x2C: INC_l();break;
+
+        //INC (HL)
+        case 0x34: INC_memoryOf_HL();break;
     }
 }
 
@@ -3347,6 +4061,9 @@ int main(int argc, char *argv[]) {
         decodeInstruction(opcode);
         std::cout << count << std::endl;
         ++count;
+        //register_a_val(2);
+        //register_b_val(2);
+        //register_f_val(2);
         check_all_registers_flags(3);
 
     }  
