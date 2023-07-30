@@ -4798,11 +4798,555 @@ void XOR_memoryOf_IYplusD() {
 CP s where s is 8bit n, register r, (HL), (IX+d), (IY+d)
 CP compares the values of accumulator and s by subtracting s from accumulator
 this instruction results in different changes in various flags 
-The flags that produce same result/ stay the same -
-H - set if (A_in % 16)-(opr % 16) < 0,if borrow from bit 4 to bit 3 happens
-P/V - stores the parity of the result
-
+The result on the flags is same as that of subtraction
 */
+void CP_8bit_n() {
+    uint8_t A = registers.a;
+    uint8_t opr = readMemory(registers.pc);
+
+    //comparing by subtraction
+    int result = (A - opr) % 256;
+    int signed_result = twos_comp_displ_int(A) - twos_comp_displ_int(opr);
+    //sign flag
+    if(result > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(result == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    } 
+    //half carry flag
+    int half_carry = (A % 16) - (opr % 16);
+    if(half_carry < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //parity/overflow flag 
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+    //add/sub flag
+    set_add_sub_flag(1);
+    //carry flag
+    if(result < 0) {
+        set_carry_flag(1);
+    }
+    else{
+        set_carry_flag(0);
+    }
+
+    ++registers.pc;
+}
+
+void CP_a() {
+    uint8_t A = registers.a;
+    uint8_t opr = registers.a;
+
+    //comparing by subtraction
+    int result = (A - opr) % 256;
+    int signed_result = twos_comp_displ_int(A) - twos_comp_displ_int(opr);
+    //sign flag
+    if(result > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(result == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    } 
+    //half carry flag
+    int half_carry = (A % 16) - (opr % 16);
+    if(half_carry < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //parity/overflow flag 
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+    //add/sub flag
+    set_add_sub_flag(1);
+    //carry flag
+    if(result < 0) {
+        set_carry_flag(1);
+    }
+    else{
+        set_carry_flag(0);
+    }
+}
+void CP_b() {
+    uint8_t A = registers.a;
+    uint8_t opr = registers.b;
+
+    //comparing by subtraction
+    int result = (A - opr) % 256;
+    int signed_result = twos_comp_displ_int(A) - twos_comp_displ_int(opr);
+    //sign flag
+    if(result > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(result == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    } 
+    //half carry flag
+    int half_carry = (A % 16) - (opr % 16);
+    if(half_carry < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //parity/overflow flag 
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+    //add/sub flag
+    set_add_sub_flag(1);
+    //carry flag
+    if(result < 0) {
+        set_carry_flag(1);
+    }
+    else{
+        set_carry_flag(0);
+    }
+}
+
+void CP_c() {
+    uint8_t A = registers.a;
+    uint8_t opr = registers.c;
+
+    //comparing by subtraction
+    int result = (A - opr) % 256;
+    int signed_result = twos_comp_displ_int(A) - twos_comp_displ_int(opr);
+    //sign flag
+    if(result > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(result == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    } 
+    //half carry flag
+    int half_carry = (A % 16) - (opr % 16);
+    if(half_carry < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //parity/overflow flag 
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+    //add/sub flag
+    set_add_sub_flag(1);
+    //carry flag
+    if(result < 0) {
+        set_carry_flag(1);
+    }
+    else{
+        set_carry_flag(0);
+    }
+}
+
+void CP_d() {
+    uint8_t A = registers.a;
+    uint8_t opr = registers.d;
+
+    //comparing by subtraction
+    int result = (A - opr) % 256;
+    int signed_result = twos_comp_displ_int(A) - twos_comp_displ_int(opr);
+    //sign flag
+    if(result > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(result == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    } 
+    //half carry flag
+    int half_carry = (A % 16) - (opr % 16);
+    if(half_carry < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //parity/overflow flag 
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+    //add/sub flag
+    set_add_sub_flag(1);
+    //carry flag
+    if(result < 0) {
+        set_carry_flag(1);
+    }
+    else{
+        set_carry_flag(0);
+    }
+
+}
+
+void CP_e() {
+    uint8_t A = registers.a;
+    uint8_t opr = registers.e;
+
+    //comparing by subtraction
+    int result = (A - opr) % 256;
+    int signed_result = twos_comp_displ_int(A) - twos_comp_displ_int(opr);
+    //sign flag
+    if(result > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(result == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    } 
+    //half carry flag
+    int half_carry = (A % 16) - (opr % 16);
+    if(half_carry < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //parity/overflow flag 
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+    //add/sub flag
+    set_add_sub_flag(1);
+    //carry flag
+    if(result < 0) {
+        set_carry_flag(1);
+    }
+    else{
+        set_carry_flag(0);
+    }
+}
+
+void CP_h() {
+    uint8_t A = registers.a;
+    uint8_t opr = registers.h;
+
+    //comparing by subtraction
+    int result = (A - opr) % 256;
+    int signed_result = twos_comp_displ_int(A) - twos_comp_displ_int(opr);
+    //sign flag
+    if(result > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(result == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    } 
+    //half carry flag
+    int half_carry = (A % 16) - (opr % 16);
+    if(half_carry < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //parity/overflow flag 
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+    //add/sub flag
+    set_add_sub_flag(1);
+    //carry flag
+    if(result < 0) {
+        set_carry_flag(1);
+    }
+    else{
+        set_carry_flag(0);
+    }
+}
+
+void CP_l() {
+    uint8_t A = registers.a;
+    uint8_t opr = registers.l;
+
+    //comparing by subtraction
+    int result = (A - opr) % 256;
+    int signed_result = twos_comp_displ_int(A) - twos_comp_displ_int(opr);
+    //sign flag
+    if(result > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(result == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    } 
+    //half carry flag
+    int half_carry = (A % 16) - (opr % 16);
+    if(half_carry < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //parity/overflow flag 
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+    //add/sub flag
+    set_add_sub_flag(1);
+    //carry flag
+    if(result < 0) {
+        set_carry_flag(1);
+    }
+    else{
+        set_carry_flag(0);
+    }
+}
+
+void CP_memoryOf_HL() {
+    uint8_t A = registers.a;
+    uint8_t opr = readMemory(address_of_HL());
+
+    //comparing by subtraction
+    int result = (A - opr) % 256;
+    int signed_result = twos_comp_displ_int(A) - twos_comp_displ_int(opr);
+    //sign flag
+    if(result > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(result == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    } 
+    //half carry flag
+    int half_carry = (A % 16) - (opr % 16);
+    if(half_carry < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //parity/overflow flag 
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+    //add/sub flag
+    set_add_sub_flag(1);
+    //carry flag
+    if(result < 0) {
+        set_carry_flag(1);
+    }
+    else{
+        set_carry_flag(0);
+    }
+
+}
+
+void CP_memoryOf_IXplusD() {
+    uint8_t A = registers.a;
+    uint8_t opr = readMemory(address_of_IXplusD());
+
+    //comparing by subtraction
+    int result = (A - opr) % 256;
+    int signed_result = twos_comp_displ_int(A) - twos_comp_displ_int(opr);
+    //sign flag
+    if(result > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(result == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    } 
+    //half carry flag
+    int half_carry = (A % 16) - (opr % 16);
+    if(half_carry < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //parity/overflow flag 
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+    //add/sub flag
+    set_add_sub_flag(1);
+    //carry flag
+    if(result < 0) {
+        set_carry_flag(1);
+    }
+    else{
+        set_carry_flag(0);
+    }
+
+    ++registers.pc;
+}
+
+
+void CP_memoryOf_IYplusD() {
+    uint8_t A = registers.a;
+    uint8_t opr = readMemory(address_of_IYplusD());
+
+    //comparing by subtraction
+    int result = (A - opr) % 256;
+    int signed_result = twos_comp_displ_int(A) - twos_comp_displ_int(opr);
+    //sign flag
+    if(result > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(result == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    } 
+    //half carry flag
+    int half_carry = (A % 16) - (opr % 16);
+    if(half_carry < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //parity/overflow flag 
+    if(signed_result < -128 || signed_result > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+    //add/sub flag
+    set_add_sub_flag(1);
+    //carry flag
+    if(result < 0) {
+        set_carry_flag(1);
+    }
+    else{
+        set_carry_flag(0);
+    }
+
+    ++registers.pc;
+}
+
 //FUNCTIONS END
 
 // All functions using (IX+d) go here
@@ -4865,8 +5409,11 @@ void functions_using_IXplusD() {
         //OR (IX+d)
         case 0xB6: OR_memoryOf_IXplusD();break;
 
-        //OR (IX+d)
+        //XOR (IX+d)
         case 0xAE: XOR_memoryOf_IXplusD();break;
+
+        //CP (IX+d)
+        case 0xBE: CP_memoryOf_IXplusD();break;
         
     }
 }
@@ -4935,6 +5482,8 @@ void functions_using_IYplusD() {
         //XOR (IY+d)
         case 0xAE: XOR_memoryOf_IYplusD();break;
 
+        //CP (IY+d)
+        case 0xBE: CP_memoryOf_IYplusD();break;
     }
 }
 
@@ -5285,8 +5834,17 @@ void decodeInstruction(uint8_t opcode) {
         case 0xAC: XOR_h();break;
         case 0xAD: XOR_l();break;
         case 0XAE: XOR_memoryOf_HL();break;
-
-
+        
+        //CP m where m is register r, (HL), 8bit n
+        case 0xFE: CP_8bit_n();break;
+        case 0xBF: CP_a();break;
+        case 0xB8: CP_b();break;
+        case 0xB9: CP_c();break;
+        case 0xBA: CP_d();break;
+        case 0xBB: CP_e();break;
+        case 0xBC: CP_h();break;
+        case 0xBD: CP_l();break;
+        case 0xBE: CP_memoryOf_HL();break;
     }
 }
 
