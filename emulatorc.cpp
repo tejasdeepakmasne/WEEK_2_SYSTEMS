@@ -24,6 +24,27 @@ int twos_comp_displ_int(int n) {
     return n;
 }
 
+// lookup table for uint8_t parity, this can also be used for 16 bits
+// by some clever bitshift techniques
+static uint8_t lookUpTable[ 256 ] = {
+  1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1,
+  0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0,
+  0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0,
+  1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1,
+  0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0,
+  1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1,
+  1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1,
+  0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0,
+  0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0,
+  1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1,
+  1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1,
+  0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0,
+  1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1,
+  0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0,
+  0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0,
+  1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1
+};
+
 void writeMemory(uint16_t address, uint8_t value) {
     assert(address < MEMORY_SIZE);
     memory[address] = value;
@@ -82,9 +103,7 @@ int bitExtracted(int number, int k, int p)
     return (((1 << k) - 1) & (number >> (p)));
 }
 
-bool isEvenParity(int n) {
-    bool even_parity
-}
+
 
 void set_carry_flag(int i) {
     switch(i) {
@@ -3601,7 +3620,11 @@ void DEC_memoryOf_IYplusD() {
     ++registers.pc;
 }
 
-//AND s where s is register, (HL),(IX+d),(IY+d) or a 8bit number n
+/*
+AND s where s is any register r, (HL), (IX+d), (IY+d), 8bit number n
+AND does a bitwise AND on the accumulator and s
+result is stored in accumulator
+*/
 void AND_a() {
     uint8_t A_in = registers.a;
     uint8_t opr = registers.a;
@@ -3629,7 +3652,7 @@ void AND_a() {
     set_half_carry_flag(1);
 
     //parity/overflow flag
-
+    set_parity_overflow_flag(lookUpTable[registers.a]);
 
     //add/sub flag
     set_add_sub_flag(0);
@@ -3637,6 +3660,1150 @@ void AND_a() {
     //carry flag
     set_carry_flag(0);
 }
+
+void AND_b() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = registers.b;
+
+    //doing bitwise and
+    registers.a = A_in & opr;
+
+    //sign bit
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.a ==0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(1);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry flag
+    set_carry_flag(0);
+}
+
+void AND_c() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = registers.c;
+
+    //doing bitwise and
+    registers.a = A_in & opr;
+
+    //sign bit
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.a ==0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(1);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry flag
+    set_carry_flag(0);
+}
+
+void AND_d() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = registers.d;
+
+    //doing bitwise and
+    registers.a = A_in & opr;
+
+    //sign bit
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.a ==0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(1);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry flag
+    set_carry_flag(0);
+}
+
+void AND_e() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = registers.e;
+
+    //doing bitwise and
+    registers.a = A_in & opr;
+
+    //sign bit
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.a ==0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(1);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry flag
+    set_carry_flag(0);
+}
+
+void AND_h() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = registers.h;
+
+    //doing bitwise and
+    registers.a = A_in & opr;
+
+    //sign bit
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.a ==0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(1);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry flag
+    set_carry_flag(0);
+}
+
+void AND_l() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = registers.l;
+
+    //doing bitwise and
+    registers.a = A_in & opr;
+
+    //sign bit
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.a ==0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(1);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry flag
+    set_carry_flag(0);
+}
+
+void AND_memoryOf_HL() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = readMemory(address_of_HL());
+
+    //doing bitwise and
+    registers.a = A_in & opr;
+
+    //sign bit
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.a ==0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(1);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry flag
+    set_carry_flag(0);
+
+}
+
+void AND_memoryOf_IXplusD() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = readMemory(address_of_IXplusD());
+
+    //doing bitwise and
+    registers.a = A_in & opr;
+
+    //sign bit
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.a ==0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(1);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry flag
+    set_carry_flag(0);
+
+}
+
+void AND_memoryOf_IYplusD() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = readMemory(address_of_IYplusD());
+
+    //doing bitwise and
+    registers.a = A_in & opr;
+
+    //sign bit
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.a ==0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(1);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry flag
+    set_carry_flag(0);
+
+}
+
+void AND_8bit_n() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = readMemory(registers.pc);
+
+    //doing bitwise and
+    registers.a = A_in & opr;
+
+    //sign bit
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.a ==0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(1);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry flag
+    set_carry_flag(0);
+}
+
+/*
+OR s where s is any register r, 8bit n, (HL), (IX+d), (IY+d)
+OR performs the bitwise OR of the values in accumulator and s
+the result is stored in accumulator
+Behaviour of flags -
+S - value of MSB of accumulator
+Z - if accumulator == 0
+H - 0
+P/V - Parity, even = 1, odd = 0
+N - 0
+C - 0
+*/
+void OR_a() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = registers.a;
+
+    //performing bitwise OR
+    registers.a = A_in | opr;
+
+    //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+}
+
+void OR_b() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = registers.b;
+
+    //performing bitwise OR
+    registers.a = A_in | opr;
+
+    //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+}
+
+void OR_c() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = registers.c;
+
+    //performing bitwise OR
+    registers.a = A_in | opr;
+
+    //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+}
+
+void OR_c() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = registers.c;
+
+    //performing bitwise OR
+    registers.a = A_in | opr;
+
+    //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+}
+
+void OR_d() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = registers.d;
+
+    //performing bitwise OR
+    registers.a = A_in | opr;
+
+    //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+}
+
+void OR_e() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = registers.e;
+
+    //performing bitwise OR
+    registers.a = A_in | opr;
+
+    //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+}
+
+void OR_h() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = registers.h;
+
+    //performing bitwise OR
+    registers.a = A_in | opr;
+
+    //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+}
+
+void OR_l() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = registers.l;
+
+    //performing bitwise OR
+    registers.a = A_in | opr;
+
+    //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+}
+
+void OR_8bit_n() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = readMemory(registers.pc);
+
+    //performing bitwise OR
+    registers.a = A_in | opr;
+
+    //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+
+    ++registers.pc;
+
+}
+
+void OR_memoryOf_HL() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = readMemory(address_of_HL());
+
+    //performing bitwise OR
+    registers.a = A_in | opr;
+
+    //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+}
+
+void OR_memoryOf_IXplusD() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = readMemory(address_of_IXplusD());
+
+    //performing bitwise OR
+    registers.a = A_in | opr;
+
+    //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+
+    ++registers.pc;
+}
+
+void OR_memoryOf_IYplusD() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = readMemory(address_of_IYplusD());
+
+    //performing bitwise OR
+    registers.a = A_in | opr;
+
+    //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+
+    ++registers.pc;
+}
+
+/*
+XOR s where s is 8bit n, register r, (HL), (IX+d), (IY+d)
+XOR performs bitwise XOR on accumulator and s
+result is stored in accumulator
+behaviour of flags -
+S = MSB of accumulator
+Z = set if result 0
+H = 0
+P/V = parity of result
+N = 0
+C = 0
+*/
+void XOR_8bit_n() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = readMemory(registers.pc);
+
+    //perfroming XOR
+    registers.a = A_in ^ opr;
+
+     //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+
+    ++registers.pc;
+
+}
+
+void XOR_a() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = registers.a;
+
+    //perfroming XOR
+    registers.a = A_in ^ opr;
+
+     //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+
+
+}
+
+void XOR_b() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = registers.b;
+
+    //perfroming XOR
+    registers.a = A_in ^ opr;
+
+     //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+
+
+}
+
+void XOR_c() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = registers.c;
+
+    //perfroming XOR
+    registers.a = A_in ^ opr;
+
+     //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+
+
+}
+
+void XOR_d() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = registers.d;
+
+    //perfroming XOR
+    registers.a = A_in ^ opr;
+
+     //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+
+
+}
+
+void XOR_e() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = registers.e;
+
+    //perfroming XOR
+    registers.a = A_in ^ opr;
+
+     //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+
+
+}
+
+void XOR_h() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = registers.h;
+
+    //perfroming XOR
+    registers.a = A_in ^ opr;
+
+     //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+
+
+}
+
+void XOR_l() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = registers.l;
+
+    //perfroming XOR
+    registers.a = A_in ^ opr;
+
+     //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+
+
+}
+
+void XOR_memoryOf_HL() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = readMemory(address_of_HL());
+
+    //perfroming XOR
+    registers.a = A_in ^ opr;
+
+     //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+
+    
+
+}
+
+void XOR_memoryOf_IXplusD() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = readMemory(address_of_IXplusD());
+
+    //perfroming XOR
+    registers.a = A_in ^ opr;
+
+     //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+
+    ++registers.pc;
+
+}
+
+void XOR_memoryOf_IYplusD() {
+    uint8_t A_in = registers.a;
+    uint8_t opr = readMemory(address_of_IYplusD());
+
+    //perfroming XOR
+    registers.a = A_in ^ opr;
+
+     //sign flag
+    set_sign_flag(bitExtracted(registers.a,1,7));
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow flag
+    set_parity_overflow_flag(lookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+
+    //carry
+    set_carry_flag(0);
+
+    ++registers.pc;
+
+}
+
+/*
+CP s where s is 8bit n, register r, (HL), (IX+d), (IY+d)
+CP compares the values of accumulator and s by subtracting s from accumulator
+this instruction results in different changes in various flags 
+The flags that produce same result/ stay the same -
+H - set if (A_in % 16)-(opr % 16) < 0,if borrow from bit 4 to bit 3 happens
+P/V - stores the parity of the result
+
+*/
+//FUNCTIONS END
 
 // All functions using (IX+d) go here
 void functions_using_IXplusD() {
@@ -3691,9 +4858,19 @@ void functions_using_IXplusD() {
 
         //DEC (IX+d)
         case 0x35: DEC_memoryOf_IXplusD();break;
+
+        //AND (IX+d)
+        case 0xA6: AND_memoryOf_IXplusD();break;
+
+        //OR (IX+d)
+        case 0xB6: OR_memoryOf_IXplusD();break;
+
+        //OR (IX+d)
+        case 0xAE: XOR_memoryOf_IXplusD();break;
         
     }
 }
+
 
 // All functions using (IY+d) go here
 void functions_using_IYplusD() {
@@ -3748,6 +4925,16 @@ void functions_using_IYplusD() {
 
         //DEC (IY+d)
         case 0x35: DEC_memoryOf_IYplusD();break;
+
+        //AND (IY+d)
+        case 0xA6: AND_memoryOf_IYplusD();break;
+
+        //OR (IY+d)
+        case 0xB6: OR_memoryOf_IYplusD();break;
+
+        //XOR (IY+d)
+        case 0xAE: XOR_memoryOf_IYplusD();break;
+
     }
 }
 
@@ -4049,6 +5236,57 @@ void decodeInstruction(uint8_t opcode) {
 
         //DEC (HL)
         case 0x35: DEC_memoryOf_HL();break;
+
+        //AND a
+        case 0xA7: AND_a();break;
+
+        //AND b
+        case 0xA0: AND_b();break;
+
+        //AND c
+        case 0xA1: AND_c();break;
+
+        //AND d
+        case 0xA2: AND_d();break;
+
+        //AND e
+        case 0xA3: AND_e();break;
+
+        //AND h
+        case 0xA4: AND_h();break;
+
+        //AND l
+        case 0xA5: AND_l();break;
+
+        //AND (HL)
+        case 0xA6: AND_memoryOf_HL();break;
+
+        //AND n
+        case 0xE6: AND_8bit_n();break;
+
+        //OR m where m is register r, (HL), 8bit n
+        case 0xF6: OR_8bit_n();break;
+        case 0xB7: OR_a();break;
+        case 0xB0: OR_b();break;
+        case 0xB1: OR_c();break;
+        case 0xB2: OR_d();break;
+        case 0xB3: OR_e();break;
+        case 0xB4: OR_h();break;
+        case 0xB5: OR_l();break;
+        case 0xB6: OR_memoryOf_HL();break;
+
+        //XOR m where m is register r, (HL), 8bit n
+        case 0xEE: XOR_8bit_n();break;
+        case 0xAF: XOR_a();break;
+        case 0xA8: XOR_b();break;
+        case 0xA9: XOR_c();break;
+        case 0xAA: XOR_d();break;
+        case 0xAB: XOR_e();break;
+        case 0xAC: XOR_h();break;
+        case 0xAD: XOR_l();break;
+        case 0XAE: XOR_memoryOf_HL();break;
+
+
     }
 }
 
