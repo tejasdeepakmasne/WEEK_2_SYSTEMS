@@ -163,6 +163,7 @@ uint16_t address_of_IYplusD() {
     uint16_t address = registers.iy + twos_comp_displ_int(d);
     return address;
 }
+
 // 8-bit load group instructions
 
 // LD r,r' contents of register r' are loaded in r
@@ -2744,8 +2745,53 @@ void SBC_a_a() {
 
     int carry_value = bitExtracted(registers.f,1,0);
     //doing the subtraction
-    int diff = A - R - carry_value;
+    int diff = (A - R - carry_value);
     registers.a = diff % 256;
+
+    //sign flag
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    int half_carry = (A%16) - (R%16);
+    if(half_carry < 0) {
+        set_half_carry_flag(1);
+    }
+    else {
+        set_half_carry_flag(0);
+    }
+
+    //parity/overflow flag
+    int overflow = twos_comp_displ_int(A) - twos_comp_displ_int(R) - 1;
+    if(overflow < -128 || overflow > 127) {
+        set_parity_overflow_flag(1);
+    }
+    else {
+        set_parity_overflow_flag(0);
+    }
+
+    //add/sub flag
+    set_add_sub_flag(1);
+
+    //carry flag
+    if(diff < 0) {
+        set_carry_flag(1);
+    }
+    else {
+        set_carry_flag(0);
+    }
 
 
 }
