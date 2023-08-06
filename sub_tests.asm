@@ -1,0 +1,13 @@
+ld a,42
+ld b,57
+sub b
+sub b
+ld b,180
+sub b
+sub b
+sub b
+sub b 
+ld b,110
+sub b 
+ld b,122
+sub b

@@ -1,0 +1,12 @@
+ld a,42
+ld b,220
+add a,b
+add a,b
+add a,b
+ld b,42
+add a,b
+ld b,128
+add a,b
+ld b,42
+add a,b
+ld b,110
