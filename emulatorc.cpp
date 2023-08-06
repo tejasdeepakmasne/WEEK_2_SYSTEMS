@@ -6891,6 +6891,577 @@ void RRC_memoryOf_HL() {
 
 }
 
+/*
+RR m- rotate right through carry - zeroth bit is pushed in carry and
+the value of carry is pushed in seventh bit
+The m operand is any of r, (HL), (IX+d), or (IY+d), as
+defined for the analogous RLe instructions. 
+*/
+
+void RR_a() {
+    uint8_t carry_value = bitExtracted(registers.f,1,0);
+    uint8_t zeroth_bit = bitExtracted(registers.a,1,0);
+    set_carry_flag(zeroth_bit);
+    registers.a = (registers.a >> 1) + (carry_value << 7);
+
+    //sign bit
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry
+    set_half_carry_flag(0);
+
+    //parity overflow
+    set_parity_overflow_flag(parityLookUpTable[registers.a]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+}
+
+
+void RR_b() {
+    uint8_t carry_value = bitExtracted(registers.f,1,0);
+    uint8_t zeroth_bit = bitExtracted(registers.b,1,0);
+    set_carry_flag(zeroth_bit);
+    registers.b = (registers.b >> 1) + (carry_value << 7);
+
+    //sign bit
+    if(registers.b > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.b == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry
+    set_half_carry_flag(0);
+
+    //parity overflow
+    set_parity_overflow_flag(parityLookUpTable[registers.b]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+}
+
+
+void RR_c() {
+    uint8_t carry_value = bitExtracted(registers.f,1,0);
+    uint8_t zeroth_bit = bitExtracted(registers.c,1,0);
+    set_carry_flag(zeroth_bit);
+    registers.c = (registers.c >> 1) + (carry_value << 7);
+
+    //sign bit
+    if(registers.c > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.c == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry
+    set_half_carry_flag(0);
+
+    //parity overflow
+    set_parity_overflow_flag(parityLookUpTable[registers.c]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+}
+
+
+void RR_d() {
+    uint8_t carry_value = bitExtracted(registers.f,1,0);
+    uint8_t zeroth_bit = bitExtracted(registers.d,1,0);
+    set_carry_flag(zeroth_bit);
+    registers.d = (registers.d >> 1) + (carry_value << 7);
+
+    //sign bit
+    if(registers.d > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.d == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry
+    set_half_carry_flag(0);
+
+    //parity overflow
+    set_parity_overflow_flag(parityLookUpTable[registers.d]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+}
+
+void RR_e() {
+    uint8_t carry_value = bitExtracted(registers.f,1,0);
+    uint8_t zeroth_bit = bitExtracted(registers.e,1,0);
+    set_carry_flag(zeroth_bit);
+    registers.e = (registers.e >> 1) + (carry_value << 7);
+
+    //sign bit
+    if(registers.e > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.e == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry
+    set_half_carry_flag(0);
+
+    //parity overflow
+    set_parity_overflow_flag(parityLookUpTable[registers.e]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+}
+
+
+void RR_h() {
+    uint8_t carry_value = bitExtracted(registers.f,1,0);
+    uint8_t zeroth_bit = bitExtracted(registers.h,1,0);
+    set_carry_flag(zeroth_bit);
+    registers.h = (registers.h >> 1) + (carry_value << 7);
+
+    //sign bit
+    if(registers.h > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.h == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry
+    set_half_carry_flag(0);
+
+    //parity overflow
+    set_parity_overflow_flag(parityLookUpTable[registers.h]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+}
+
+
+void RR_l() {
+    uint8_t carry_value = bitExtracted(registers.f,1,0);
+    uint8_t zeroth_bit = bitExtracted(registers.l,1,0);
+    set_carry_flag(zeroth_bit);
+    registers.l = (registers.l >> 1) + (carry_value << 7);
+
+    //sign bit
+    if(registers.l > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.l == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry
+    set_half_carry_flag(0);
+
+    //parity overflow
+    set_parity_overflow_flag(parityLookUpTable[registers.l]);
+
+    //add/sub flag
+    set_add_sub_flag(0);
+}
+
+void RR_memoryOf_HL() {
+    uint8_t value_at_HL = readMemory(address_of_HL());
+    uint8_t carry_value = bitExtracted(registers.f,1,0);
+    uint8_t zeroth_bit = bitExtracted(value_at_HL,1,0);
+    set_carry_flag(zeroth_bit);
+    value_at_HL = (value_at_HL >> 1) + (carry_value << 7);
+    writeMemory(address_of_HL(),value_at_HL);
+
+    //sign flag
+    if(value_at_HL > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(value_at_HL == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry 
+    set_half_carry_flag(0);
+
+    //parity/overflow
+    set_parity_overflow_flag(parityLookUpTable[value_at_HL]);
+
+    //add/sub
+    set_add_sub_flag(0);
+
+}
+
+/*
+SLA m - An arithmetic shift left 1 bit position is performed on the contents of 
+operand m. The contents of bit 7 are copied to the Carry flag.
+Bit 0 is the least-significant bit.
+
+The m operand is any of r. (HL). (IX+d) or (IY+d). as
+defined for the analogous RLe instructions. 
+*/
+
+void SLA_a() {
+    uint8_t seventh_bit = bitExtracted(registers.a,1,7);
+    set_carry_flag(seventh_bit);
+    registers.a = registers.a << 1;
+    
+    //sign flag
+    if(registers.a > 127) {
+        
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.a == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry
+    set_half_carry_flag(0);
+
+    //parity/overflow 
+    set_parity_overflow_flag(parityLookUpTable[registers.a]);
+
+    //add/sum flag
+    set_add_sub_flag(0);
+
+
+}
+
+
+void SLA_b() {
+    uint8_t seventh_bit = bitExtracted(registers.b,1,7);
+    set_carry_flag(seventh_bit);
+    registers.b = registers.b << 1;
+    
+    //sign flag
+    if(registers.b > 127) {
+        
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.b == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry
+    set_half_carry_flag(0);
+
+    //parity/overflow 
+    set_parity_overflow_flag(parityLookUpTable[registers.b]);
+
+    //add/sum flag
+    set_add_sub_flag(0);
+
+
+}
+
+
+void SLA_c() {
+    uint8_t seventh_bit = bitExtracted(registers.c,1,7);
+    set_carry_flag(seventh_bit);
+    registers.c = registers.c << 1;
+    
+    //sign flag
+    if(registers.c > 127) {
+        
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.c == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry
+    set_half_carry_flag(0);
+
+    //parity/overflow 
+    set_parity_overflow_flag(parityLookUpTable[registers.c]);
+
+    //add/sum flag
+    set_add_sub_flag(0);
+
+
+}
+
+void SLA_d() {
+    uint8_t seventh_bit = bitExtracted(registers.d,1,7);
+    set_carry_flag(seventh_bit);
+    registers.d = registers.d << 1;
+    
+    //sign flag
+    if(registers.d > 127) {
+        
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.d == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry
+    set_half_carry_flag(0);
+
+    //parity/overflow 
+    set_parity_overflow_flag(parityLookUpTable[registers.d]);
+
+    //add/sum flag
+    set_add_sub_flag(0);
+
+
+}
+
+void SLA_e() {
+    uint8_t seventh_bit = bitExtracted(registers.e,1,7);
+    set_carry_flag(seventh_bit);
+    registers.e = registers.e << 1;
+    
+    //sign flag
+    if(registers.e > 127) {
+        
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.e == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry
+    set_half_carry_flag(0);
+
+    //parity/overflow 
+    set_parity_overflow_flag(parityLookUpTable[registers.e]);
+
+    //add/sum flag
+    set_add_sub_flag(0);
+
+
+}
+
+void SLA_h() {
+    uint8_t seventh_bit = bitExtracted(registers.h,1,7);
+    set_carry_flag(seventh_bit);
+    registers.h = registers.h << 1;
+    
+    //sign flag
+    if(registers.h > 127) {
+        
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.h == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry
+    set_half_carry_flag(0);
+
+    //parity/overflow 
+    set_parity_overflow_flag(parityLookUpTable[registers.h]);
+
+    //add/sum flag
+    set_add_sub_flag(0);
+
+
+}
+
+void SLA_l() {
+    uint8_t seventh_bit = bitExtracted(registers.l,1,7);
+    set_carry_flag(seventh_bit);
+    registers.l = registers.l << 1;
+    
+    //sign flag
+    if(registers.l > 127) {
+        
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(registers.l == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry
+    set_half_carry_flag(0);
+
+    //parity/overflow 
+    set_parity_overflow_flag(parityLookUpTable[registers.l]);
+
+    //add/sum flag
+    set_add_sub_flag(0);
+
+
+}
+
+void SLA_memoryOf_HL() {
+    uint8_t value_at_HL = readMemory(address_of_HL());
+    uint8_t seventh_bit = bitExtracted(value_at_HL,1,7);
+    set_carry_flag(seventh_bit);
+    value_at_HL = value_at_HL << 1;
+    writeMemory(address_of_HL(),value_at_HL);
+
+    //sign flag
+    if(value_at_HL > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        set_sign_flag(0);
+    }
+
+    //zero flag
+    if(value_at_HL == 0) {
+        set_zero_flag(1);
+    }
+    else {
+        set_zero_flag(0);
+    }
+
+    //half carry flag
+    set_half_carry_flag(0);
+
+    //parity/overflow
+    set_parity_overflow_flag(parityLookUpTable[value_at_HL]);
+
+    //add/sub
+    set_add_sub_flag(0);
+    
+}
+
+void SRA_a() {
+    uint8_t seventh_bit = bitExtracted(registers.a,1,7);
+    uint8_t zeroth_bit = bitExtracted(registers.a,1,0);
+    set_carry_flag(zeroth_bit);
+    registers.a = (registers.a >> 1) + (seventh_bit << 7);
+
+    //sign flag
+    if(registers.a > 127) {
+        set_sign_flag(1);
+    }
+    else {
+        
+    }
+}
+
+
+
 //FUNCTIONS END
 
 // All functions using (IX+d) go here
@@ -7063,7 +7634,59 @@ void functions_using_ED_opcode() {
 } 
 
 void functions_using_CB() {
+    uint8_t current_opcode = fetchInstruction();
+    switch(current_opcode) {
+        //RLC m
+        case 0x07: RLC_a();break;
+        case 0x00: RLC_b();break;
+        case 0x01: RLC_c();break;
+        case 0x02: RLC_d();break;
+        case 0x03: RLC_e();break;
+        case 0x04: RLC_h();break;
+        case 0x05: RLC_l();break;
+        case 0x06: RLC_memoryOf_HL();break;
 
+        //RRC m
+        case 0x0F: RRC_a();break;
+        case 0x08: RRC_b();break;
+        case 0x09: RRC_c();break;
+        case 0x0A: RRC_d();break;
+        case 0x0B: RRC_e();break;
+        case 0x0C: RRC_h();break;
+        case 0x0D: RRC_l();break;
+        case 0x0E: RRC_memoryOf_HL();break;
+
+        //RL m
+        case 0x17: RL_a();break;
+        case 0x10: RL_b();break;
+        case 0x11: RL_c();break;
+        case 0x12: RL_d();break;
+        case 0x13: RL_e();break;
+        case 0x14: RL_h();break;
+        case 0x15: RL_l();break;
+        case 0x16: RL_memoryOf_hl();break;
+
+        //RR m
+        case 0x1F: RR_a();break;
+        case 0x18: RR_b();break;
+        case 0x19: RR_c();break;
+        case 0x1A: RR_d();break;
+        case 0x1B: RR_e();break;
+        case 0x1C: RR_h();break;
+        case 0x1D: RR_l();break;
+        case 0x1E: RR_memoryOf_HL();break;
+
+        //SLA m
+        case 0x27: SLA_a();break;
+        case 0x20: SLA_b();break;
+        case 0x21: SLA_c();break;
+        case 0x22: SLA_d();break;
+        case 0x23: SLA_e();break;
+        case 0x24: SLA_h();break;
+        case 0x25: SLA_l();break;
+        case 0x26: SLA_memoryOf_HL();break;
+
+    }
 }
 
 void decodeInstruction(uint8_t opcode) {
@@ -7424,6 +8047,18 @@ void decodeInstruction(uint8_t opcode) {
 
         //SCF - set carry flag
         case 0x37: set_carry_flag(1);
+
+        // RLCA
+        case 0x07: RLCA();break;
+
+        //RRCA
+        case 0x0F: RRCA();break;
+
+        //RLA
+        case 0x17: RLA();break;
+
+        //RRA
+        case 0x1F: RRA();break;
     }
 }
 
